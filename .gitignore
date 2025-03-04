@@ -1,0 +1,82 @@
+# Build-Verzeichnisse
+bin/
+obj/
+
+# User-spezifische Dateien
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs und temporäre Dateien
+*.log
+logs/
+*.tmp
+*.temp
+
+# Umgebungsvariablen und Secrets
+.env
+*.env
+secrets.json
+
+# Dependency-Cache (NuGet)
+packages/
+*.nupkg
+project.lock.json
+
+# ASP.NET spezifische Dateien
+wwwroot/
+node_modules/
+libman.json
+
+# Docker
+docker-compose.override.yml
+**/Dockerfile
+**/.dockerignore
+
+# Rider / JetBrains IDE
+.idea/
+*.dotCover
+*.sln.iml
+
+# MacOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*.swp
+
+# Test Results
+[Tt]est[Rr]esults/
+
+# Coverage reports
+coverage/
+*.coverage
+.coverage.*
+
+# Database files
+*.mdf
+*.ldf
+*.ndf
+
+# Visual Studio specific
+.vs/
+**/Properties/launchSettings.json
+
+# Published files
+**/[Pp]ublish/
+**/[Pp]ublished/
+*.[Pp]ublish.xml
+
+# JS/TS
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.npm
+.yarn

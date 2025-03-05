@@ -1,5 +1,12 @@
 @baseUrl = http://localhost:5209
 
+### Open Swagger UI
+# Access the interactive API documentation
+GET {{baseUrl}}/swagger
+Accept: text/html
+
+###
+
 ### Example API Endpoints (For Future Implementation)
 
 ### Get Resource by ID

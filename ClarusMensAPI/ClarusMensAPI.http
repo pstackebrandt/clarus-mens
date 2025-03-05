@@ -1,5 +1,12 @@
 @ClarusMensAPI_HostAddress = http://localhost:5209
 
+### Open Swagger UI
+# Access the interactive API documentation
+GET {{ClarusMensAPI_HostAddress}}/swagger
+Accept: text/html
+
+###
+
 GET {{ClarusMensAPI_HostAddress}}/api/question?query=hello
 Accept: application/json
 

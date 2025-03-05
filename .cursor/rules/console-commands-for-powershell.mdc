@@ -1,0 +1,22 @@
+---
+description: PowerShell 7 Command Generation (Not Bash)
+globs: "*.ps1", "*.psm1", "*.psd1", "*.md", "*.txt"
+alwaysApply: false
+---
+---
+description: PowerShell 7 Command Generation (Not Bash)
+globs: "*.ps1", "*.psm1", "*.psd1", "*.md", "*.txt"
+alwaysApply: true
+---
+Generate PowerShell 7 commands for Windows 11, not Bash syntax:
+
+- PowerShell cmdlets: Get-ChildItem (not ls), Set-Location (not cd)
+- Paths use backslashes (C:\Users\)
+- Flags use single hyphen (-Force)
+- Variables: $variable, string interpolation: "$()"
+- Environment variables: $env:VARIABLE
+- Piping: | (with proper object handling)
+- Command separation: ; (not &&)
+- Redirection: >, >>, 2>
+
+Prefer PowerShell-native approaches over cmd.exe commands.

@@ -4,7 +4,7 @@ A clear mind, a clear path forward.
 
 ## About
 
-ClarusMens is a .NET-based API project designed to [brief description of what your project aims to achieve].
+ClarusMens is a .NET-based API project  that generates structured answers (MVP), learning questions with answers, and quizzes based on user input.
 
 ## Prerequisites
 
@@ -14,27 +14,31 @@ ClarusMens is a .NET-based API project designed to [brief description of what yo
 ## Getting Started
 
 1. Clone the repository
-   ```
+
+   ``` powershell
    git clone [your-repository-url]
    ```
 
 2. Navigate to the project directory
-   ```
+
+   ``` powershell
    cd clarus-mens
    ```
 
 3. Build the solution
-   ```
+
+   ``` powershell
    dotnet build
    ```
 
 4. Run the API
-   ```
+
+   ``` powershell
    cd ClarusMensAPI
    dotnet run
    ```
 
-The API will be available at http://localhost:5209.
+The API will be available at <http://localhost:5209>.
 
 ## Testing the API
 
@@ -48,15 +52,16 @@ This project includes `.http` files for testing API endpoints with the REST Clie
 4. View the response in the split window
 
 Example request:
+
 ```http
 GET http://localhost:5209/weatherforecast/
-```
+    ```
 
 ### Using Browser or Postman
 
 You can also test the API using your browser or tools like Postman:
 
-- Weather forecast endpoint: http://localhost:5209/weatherforecast
+- Weather forecast endpoint: <http://localhost:5209/weatherforecast>
 
 ## Project Structure
 
@@ -70,7 +75,8 @@ You can also test the API using your browser or tools like Postman:
 ### Using Hot Reload
 
 For faster development, use:
-```
+
+``` powershell
 dotnet watch run
 ```
 
@@ -83,4 +89,4 @@ This enables hot reload so you can see changes without manually restarting the a
 
 ## License
 
-This project is licensed under the [LICENSE](LICENSE) file in the repository. 
+This project is licensed under the [Apache 2.0](LICENSE) file in the repository.

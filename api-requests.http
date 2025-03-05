@@ -1,59 +1,21 @@
 @baseUrl = http://localhost:5209
 
+### Get Answer to Question
+# Retrieves an answer to a user's question
+GET {{baseUrl}}/api/question?query=Hello
+Accept: application/json
+
+###
+
+### Get Answer to Another Question
+GET {{baseUrl}}/api/question?query=What is your name?
+Accept: application/json 
+
+###
+
 ### Get Weather Forecast
 # Retrieves a 5-day weather forecast
 GET {{baseUrl}}/weatherforecast
 Accept: application/json
 
 ###
-
-### Example API Endpoints (For Future Implementation)
-
-### Get Resource by ID
-GET {{baseUrl}}/api/resources/{{$guid}}
-Accept: application/json
-
-###
-
-### Create New Resource
-POST {{baseUrl}}/api/resources
-Content-Type: application/json
-
-{
-  "name": "Example Resource",
-  "description": "This is an example resource",
-  "createdAt": "{{$timestamp}}",
-  "attributes": {
-    "key1": "value1",
-    "key2": 123
-  }
-}
-
-###
-
-### Update Resource
-PUT {{baseUrl}}/api/resources/{{$guid}}
-Content-Type: application/json
-
-{
-  "name": "Updated Resource",
-  "description": "This resource has been updated",
-  "attributes": {
-    "key1": "new value",
-    "key2": 456
-  }
-}
-
-###
-
-### Delete Resource
-DELETE {{baseUrl}}/api/resources/{{$guid}}
-
-###
-
-### Save Response Example
-# This will save the response to a file
-GET {{baseUrl}}/weatherforecast
-Accept: application/json
-
-> ./response-example.json 

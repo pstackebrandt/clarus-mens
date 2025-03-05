@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(); // Using the simpler approach without options
 
 // Register services for question-answer functionality
 builder.Services.AddSingleton<IQuestionService, SimpleQuestionService>();
@@ -20,17 +20,18 @@ builder.Services.Configure<HttpsRedirectionOptions>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-// Only apply HTTPS redirection in non-development environments
+// Only use HTTPS redirection in non-development environments
 // This prevents certificate issues during local development
-// while ensuring secure connections in production
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
-else
-{
-    app.MapOpenApi();
-}
+
+// Always make OpenAPI available regardless of environment
+app.MapOpenApi(); // Makes JSON spec available at /openapi
+
+// No UI configuration for .NET 9 SimpleAPI - UI is automatically 
+// available at /openapi/ui when using MapOpenApi()
 
 // Add the question-answer endpoint
 app.MapGet("/api/question", async (string query, IQuestionService questionService) =>

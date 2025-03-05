@@ -1,8 +1,15 @@
 @baseUrl = http://localhost:5209
 
-### Open Swagger UI
+### OpenAPI JSON Definition
+# Access the API specification
+GET {{baseUrl}}/openapi/v1.json
+Accept: application/json
+
+###
+
+### OpenAPI UI (Development Only)
 # Access the interactive API documentation
-GET {{baseUrl}}/swagger
+GET {{baseUrl}}/openapi/ui
 Accept: text/html
 
 ###

@@ -1,6 +1,6 @@
 @ClarusMensAPI_HostAddress = http://localhost:5209
 
-GET {{ClarusMensAPI_HostAddress}}/weatherforecast/
+GET {{ClarusMensAPI_HostAddress}}/api/question?query=hello
 Accept: application/json
 
 ###

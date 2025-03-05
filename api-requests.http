@@ -12,10 +12,3 @@ GET {{baseUrl}}/api/question?query=What is your name?
 Accept: application/json 
 
 ###
-
-### Get Weather Forecast
-# Retrieves a 5-day weather forecast
-GET {{baseUrl}}/weatherforecast
-Accept: application/json
-
-###

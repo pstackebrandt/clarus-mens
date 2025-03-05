@@ -46,7 +46,7 @@ DELETE {{baseUrl}}/api/resources/{{$guid}}
 
 ### Save Response Example
 # This will save the response to a file
-GET {{baseUrl}}/weatherforecast
+GET {{baseUrl}}/api/question?query=hello
 Accept: application/json
 
 > ./response-example.json 

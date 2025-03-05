@@ -54,14 +54,14 @@ This project includes `.http` files for testing API endpoints with the REST Clie
 Example request:
 
 ```http
-GET http://localhost:5209/weatherforecast/
+GET http://localhost:5209/api/question?query=hello
     ```
 
 ### Using Browser or Postman
 
 You can also test the API using your browser or tools like Postman:
 
-- Weather forecast endpoint: <http://localhost:5209/weatherforecast>
+- Question-answer endpoint: <http://localhost:5209/api/question?query=hello>
 
 ## Project Structure
 

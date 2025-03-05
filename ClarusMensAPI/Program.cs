@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.HttpsPolicy;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,15 +9,28 @@ builder.Services.AddOpenApi();
 // Register services for question-answer functionality
 builder.Services.AddSingleton<IQuestionService, SimpleQuestionService>();
 
+// Configure HTTPS redirection
+// This explicitly sets the HTTPS port to prevent the warning:
+// "Failed to determine the https port for redirect"
+builder.Services.Configure<HttpsRedirectionOptions>(options =>
+{
+    options.HttpsPort = 7043; // Or whatever your HTTPS port should be
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Only apply HTTPS redirection in non-development environments
+// This prevents certificate issues during local development
+// while ensuring secure connections in production
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+else
 {
     app.MapOpenApi();
 }
-
-app.UseHttpsRedirection();
 
 var summaries = new[]
 {

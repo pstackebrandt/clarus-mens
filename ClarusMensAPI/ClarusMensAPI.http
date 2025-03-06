@@ -1,3 +1,8 @@
+// HTTP request file for Clarus Mens API
+// =====================================
+
+// This file is used to test the API using the HTTP client.
+
 @ClarusMensAPI_HostAddress = http://localhost:5209
 
 ### OpenAPI JSON Definition
@@ -5,9 +10,12 @@
 GET {{ClarusMensAPI_HostAddress}}/openapi/v1.json
 Accept: application/json
 
-###
+### Version information
+# Get the version information
+GET {{ClarusMensAPI_HostAddress}}/api/version
+Accept: application/json
 
-### OpenAPI UI (Development Only)
+### OpenAPI UI (Development Only) - Currently not working -
 # Access the interactive API documentation
 GET {{ClarusMensAPI_HostAddress}}/openapi/ui
 Accept: text/html

@@ -1,13 +1,19 @@
 using Microsoft.AspNetCore.HttpsPolicy;
+using ClarusMensAPI.Services;
+using Microsoft.AspNetCore.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi(); // Using the simpler approach without options
+builder.Services.AddSingleton<CustomOpenApiTransformer>();
 
 // Register services for question-answer functionality
 builder.Services.AddSingleton<IQuestionService, SimpleQuestionService>();
+
+// Register version service
+builder.Services.AddSingleton<VersionService>();
 
 // Configure HTTPS redirection
 // This explicitly sets the HTTPS port to prevent the warning:
@@ -76,6 +82,20 @@ app.MapGet("/api/question", async (string query, IQuestionService questionServic
     operation.Description = "Provides a short answer to a user's question";
     operation.Parameters[0].Description = "The question to be answered";
     return operation;
+});
+
+// Add version endpoint
+app.MapGet("/api/version", (VersionService versionService) =>
+{
+    var version = versionService.GetVersion();
+    return Results.Ok(new 
+    { 
+        version = versionService.GetDisplayVersion(),
+        major = version.Major,
+        minor = version.Minor,
+        build = version.Build,
+        revision = version.Revision
+    });
 });
 
 app.Run();

@@ -15,9 +15,9 @@ Accept: application/json
 GET {{ClarusMensAPI_HostAddress}}/api/version
 Accept: application/json
 
-### OpenAPI UI (Development Only) - Currently not working -
+### OpenAPI UI (Swagger) - Currently not working -
 # Access the interactive API documentation
-GET {{ClarusMensAPI_HostAddress}}/openapi/ui
+GET {{ClarusMensAPI_HostAddress}}/swagger
 Accept: text/html
 
 ###

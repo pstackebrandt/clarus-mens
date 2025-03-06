@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.HttpsPolicy;
 using ClarusMensAPI.Services;
 using Microsoft.AspNetCore.OpenApi;
+using Microsoft.OpenApi.Models;
+
+// API contract version constant
+const string ApiContractVersion = "v0";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +13,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi(); // Using the simpler approach without options
 builder.Services.AddSingleton<CustomOpenApiTransformer>();
 
+// Register version service (make sure it's registered before Swagger config)
+builder.Services.AddSingleton<VersionService>();
+
+// Configure Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    // Get the version service to use the actual version
+    var serviceProvider = builder.Services.BuildServiceProvider();
+    var versionService = serviceProvider.GetRequiredService<VersionService>();
+    
+    c.SwaggerDoc(ApiContractVersion, new OpenApiInfo 
+    { 
+        Title = "Clarus Mens API", 
+        Version = versionService.GetDisplayVersion(),
+        Description = "API for Clarus Mens question answering service (Pre-release version)"
+    });
+});
+
 // Register services for question-answer functionality
 builder.Services.AddSingleton<IQuestionService, SimpleQuestionService>();
-
-// Register version service
-builder.Services.AddSingleton<VersionService>();
 
 // Configure HTTPS redirection
 // This explicitly sets the HTTPS port to prevent the warning:
@@ -35,6 +54,14 @@ if (!app.Environment.IsDevelopment())
 
 // Always make OpenAPI available regardless of environment
 app.MapOpenApi(); // Makes JSON spec available at /openapi
+
+// Configure Swagger UI
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint($"/swagger/{ApiContractVersion}/swagger.json", $"Clarus Mens API {app.Services.GetRequiredService<VersionService>().GetDisplayVersion()} (Beta)");
+    options.RoutePrefix = "swagger";
+});
 
 // No UI configuration for .NET 9 SimpleAPI - UI is automatically 
 // available at /openapi/ui when using MapOpenApi()

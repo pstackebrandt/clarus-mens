@@ -20,9 +20,9 @@ public class VersionService
     }
     
     /// <summary>
-    /// Gets the full semantic version string (v1.2.3)
+    /// Gets the version string without any prefix (e.g. "1.2.3")
     /// </summary>
-    public string GetVersionString() => $"v{_version.Major}.{_version.Minor}.{_version.Build}";
+    public string GetVersionString() => $"{_version.Major}.{_version.Minor}.{_version.Build}";
     
     /// <summary>
     /// Gets the version object
@@ -35,7 +35,7 @@ public class VersionService
     /// </summary>
     public string GetDisplayVersion(string? suffix = null)
     {
-        string version = $"{_version.Major}.{_version.Minor}.{_version.Build}";
+        string version = GetVersionString();
         
         if (!string.IsNullOrEmpty(suffix))
         {

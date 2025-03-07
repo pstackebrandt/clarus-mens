@@ -10,19 +10,17 @@
 GET {{ClarusMensAPI_HostAddress}}/openapi/v1.json
 Accept: application/json
 
+### OpenAPI UI (Swagger)
+# Access the interactive API documentation
+GET {{ClarusMensAPI_HostAddress}}/swagger
+Accept: text/html
+
 ### Version information
 # Get the version information
 GET {{ClarusMensAPI_HostAddress}}/api/version
 Accept: application/json
 
-### OpenAPI UI (Swagger) - Currently not working -
-# Access the interactive API documentation
-GET {{ClarusMensAPI_HostAddress}}/swagger
-Accept: text/html
-
-###
-
+### Question
+# Get the answer
 GET {{ClarusMensAPI_HostAddress}}/api/question?query=hello
 Accept: application/json
-
-###

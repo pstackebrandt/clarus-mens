@@ -111,7 +111,9 @@ app.MapGet("/api/question", async (string query, IQuestionService questionServic
     return operation;
 });
 
-// Add version endpoint
+/**
+    Returns detailed version information of the API.
+*/
 app.MapGet("/api/version", (VersionService versionService) =>
 {
     var version = versionService.GetVersion();
@@ -123,6 +125,12 @@ app.MapGet("/api/version", (VersionService versionService) =>
         build = version.Build,
         revision = version.Revision
     });
+})
+.WithName("GetVersion")
+.WithOpenApi(operation => {
+    operation.Summary = "Get API version information";
+    operation.Description = "Returns detailed version information of the API including major, minor, build, and revision numbers";
+    return operation;
 });
 
 app.Run();

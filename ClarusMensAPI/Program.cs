@@ -108,6 +108,8 @@ app.MapGet("/api/question", async (string query, IQuestionService questionServic
     operation.Summary = "Get an answer to a question";
     operation.Description = "Provides a short answer to a user's question";
     operation.Parameters[0].Description = "The question to be answered";
+
+    operation.Parameters[0].Example = new Microsoft.OpenApi.Any.OpenApiString("What is your name?");
     return operation;
 });
 

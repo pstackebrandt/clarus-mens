@@ -87,6 +87,10 @@ This enables hot reload so you can see changes without manually restarting the a
 - [API Testing Guide](docs/api-testing.md)
 - [MVP Plan](docs/mvp/mvp-plan.md)
 
+## Versioning
+
+This project uses Semantic Versioning. For version update instructions and processes, see [VERSIONING.md](./VERSIONING.md).
+
 ## License
 
 This project is licensed under the [Apache 2.0](LICENSE) file in the repository.

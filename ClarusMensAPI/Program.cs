@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using ClarusMensAPI.Services;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 // API contract version constant
 const string ApiContractVersion = "v0";
@@ -16,20 +18,9 @@ builder.Services.AddSingleton<CustomOpenApiTransformer>();
 // Register version service (make sure it's registered before Swagger config)
 builder.Services.AddSingleton<VersionService>();
 
-// Configure Swagger
-builder.Services.AddSwaggerGen(c =>
-{
-    // Get the version service to use the actual version
-    var serviceProvider = builder.Services.BuildServiceProvider();
-    var versionService = serviceProvider.GetRequiredService<VersionService>();
-    
-    c.SwaggerDoc(ApiContractVersion, new OpenApiInfo 
-    { 
-        Title = "Clarus Mens API", 
-        Version = versionService.GetDisplayVersion(),
-        Description = "API for Clarus Mens question answering service (Pre-release version)"
-    });
-});
+// 2. In Program.cs, register the setup class
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerVersionSetup>();
+builder.Services.AddSwaggerGen();
 
 // Register services for question-answer functionality
 builder.Services.AddSingleton<IQuestionService, SimpleQuestionService>();
@@ -43,6 +34,13 @@ builder.Services.Configure<HttpsRedirectionOptions>(options =>
 });
 
 var app = builder.Build();
+
+// Add version information to logs
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    var versionService = app.Services.GetRequiredService<VersionService>();
+    app.Logger.LogInformation("Application started. Version: {Version}", versionService.GetDisplayVersion());
+});
 
 // Configure the HTTP request pipeline.
 // Only use HTTPS redirection in non-development environments
@@ -59,7 +57,7 @@ app.MapOpenApi(); // Makes JSON spec available at /openapi
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
-    options.SwaggerEndpoint($"/swagger/{ApiContractVersion}/swagger.json", $"Clarus Mens API {app.Services.GetRequiredService<VersionService>().GetDisplayVersion()} (Beta)");
+    options.SwaggerEndpoint($"/swagger/{ApiContractVersion}/swagger.json", $"Clarus Mens API {app.Services.GetRequiredService<VersionService>().GetDisplayVersion()}");
     options.RoutePrefix = "swagger";
 });
 
@@ -118,21 +116,47 @@ app.MapGet("/api/question", async (string query, IQuestionService questionServic
 */
 app.MapGet("/api/version", (VersionService versionService) =>
 {
-    var version = versionService.GetVersion();
+    var semVersion = versionService.GetSemVersion();
+    var dotNetVersion = versionService.GetDotNetVersion();
+    
     return Results.Ok(new 
     { 
-        version = versionService.GetDisplayVersion(),
-        major = version.Major,
-        minor = version.Minor,
-        build = version.Build,
-        revision = version.Revision
+        version = versionService.GetVersionString(),
+        semVer = new
+        {
+            major = semVersion.Major,
+            minor = semVersion.Minor,
+            patch = semVersion.Patch,
+            preRelease = semVersion.PreRelease ?? string.Empty,
+            buildMetadata = semVersion.BuildMetadata ?? string.Empty,
+            isPreRelease = semVersion.IsPreRelease
+        },
+        assemblyVersion = $"{dotNetVersion.Major}.{dotNetVersion.Minor}.{dotNetVersion.Build}.{dotNetVersion.Revision}"
     });
 })
 .WithName("GetVersion")
 .WithOpenApi(operation => {
     operation.Summary = "Get API version information";
-    operation.Description = "Returns detailed version information of the API including major, minor, build, and revision numbers";
+    operation.Description = "Returns detailed version information of the API following SemVer 2.0.0 specification";
     return operation;
+});
+
+app.Use(async (context, next) =>
+{
+    // Update Swagger info with the correct version
+    var versionService = context.RequestServices.GetRequiredService<VersionService>();
+    var swagger = app.Services.GetRequiredService<IOptions<SwaggerGenOptions>>().Value;
+    swagger.SwaggerDoc(
+        ApiContractVersion, 
+        new OpenApiInfo 
+        { 
+            Title = "Clarus Mens API",
+            Version = versionService.GetDisplayVersion(),
+            Description = "API for Clarus Mens question answering service"
+        }
+    );
+    
+    await next();
 });
 
 app.Run();
@@ -178,5 +202,28 @@ public class SimpleQuestionService : IQuestionService
 
         // Default response
         return Task.FromResult("I don't have an answer for that question yet. As we grow, I'll learn to answer more questions.");
+    }
+}
+
+// 1. Create a setup class that receives VersionService via DI
+public class SwaggerVersionSetup : IConfigureOptions<SwaggerGenOptions>
+{
+    private readonly VersionService _versionService;
+    private readonly string _apiVersion;
+
+    public SwaggerVersionSetup(VersionService versionService, IConfiguration config)
+    {
+        _versionService = versionService;
+        _apiVersion = config["ApiVersion"] ?? "v0"; // Get from config or use default
+    }
+
+    public void Configure(SwaggerGenOptions options)
+    {
+        options.SwaggerDoc(_apiVersion, new OpenApiInfo
+        {
+            Title = "Clarus Mens API",
+            Version = _versionService.GetDisplayVersion(),
+            Description = "API for Clarus Mens question answering service"
+        });
     }
 }

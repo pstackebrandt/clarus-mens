@@ -80,3 +80,6 @@ yarn-debug.log
 yarn-error.log
 .npm
 .yarn
+changes.txt
+staged_files.txt
+staged.txt

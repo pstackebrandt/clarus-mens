@@ -29,7 +29,7 @@ internal sealed class CustomOpenApiTransformer : IOpenApiDocumentTransformer
         document.Info = new()
         {   
             Title = "Clarus Mens API",
-            Version = _versionService.GetVersionString(),
+            Version = _versionService.GetDisplayVersion(),
             Description = "API for Clarus Mens"
         };
         return Task.CompletedTask;

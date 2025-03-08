@@ -55,7 +55,7 @@ Example request:
 
 ```http
 GET http://localhost:5209/api/question?query=hello
-    ```
+```
 
 ### Using Browser or Postman
 

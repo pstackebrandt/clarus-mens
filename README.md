@@ -16,7 +16,7 @@ ClarusMens is a .NET-based API project  that generates structured answers (MVP),
 1. Clone the repository
 
    ``` powershell
-   git clone [your-repository-url]
+   git clone https://github.com/pstackebrandt/clarus-mens.git
    ```
 
 2. Navigate to the project directory

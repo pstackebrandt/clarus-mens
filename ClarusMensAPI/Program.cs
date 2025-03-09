@@ -18,7 +18,8 @@ builder.Services.AddSingleton<CustomOpenApiTransformer>();
 // Register version service (make sure it's registered before Swagger config)
 builder.Services.AddSingleton<VersionService>();
 
-// 2. In Program.cs, register the setup class
+// Configure Swagger through the SwaggerVersionSetup class which uses the IConfigureOptions pattern
+// This properly integrates with ASP.NET Core's configuration system and runs once at startup
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerVersionSetup>();
 builder.Services.AddSwaggerGen();
 
@@ -141,24 +142,6 @@ app.MapGet("/api/version", (VersionService versionService) =>
     return operation;
 });
 
-app.Use(async (context, next) =>
-{
-    // Update Swagger info with the correct version
-    var versionService = context.RequestServices.GetRequiredService<VersionService>();
-    var swagger = app.Services.GetRequiredService<IOptions<SwaggerGenOptions>>().Value;
-    swagger.SwaggerDoc(
-        ApiContractVersion, 
-        new OpenApiInfo 
-        { 
-            Title = "Clarus Mens API",
-            Version = versionService.GetDisplayVersion(),
-            Description = "API for Clarus Mens question answering service"
-        }
-    );
-    
-    await next();
-});
-
 app.Run();
 
 // Response model
@@ -205,7 +188,8 @@ public class SimpleQuestionService : IQuestionService
     }
 }
 
-// 1. Create a setup class that receives VersionService via DI
+// SwaggerVersionSetup configures Swagger documentation at application startup
+// This is the recommended way to configure Swagger in ASP.NET Core
 public class SwaggerVersionSetup : IConfigureOptions<SwaggerGenOptions>
 {
     private readonly VersionService _versionService;

@@ -1,6 +1,7 @@
 # Build-Verzeichnisse
 bin/
 obj/
+_testbuild/
 
 # User-spezifische Dateien
 .vscode/
@@ -83,3 +84,5 @@ yarn-error.log
 changes.txt
 staged_files.txt
 staged.txt
+
+.fake

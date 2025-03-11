@@ -4,7 +4,22 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Improves performance and reduces deployment size by using culture-neutral string operations.
+         If locale-specific formatting (like German) is needed later, we can use explicit CultureInfo objects. -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <InternalsVisibleTo>ClarusMensAPI.FunctionalTests</InternalsVisibleTo>
     <!-- Version properties are defined in Directory.Build.props -->
+  </PropertyGroup>
+
+  <!-- Testing configuration with separate output path -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Testing'">
+    <!-- Use a completely separate output directory for testing -->
+    <OutputPath>$(SolutionDir)_testbuild\$(MSBuildProjectName)</OutputPath>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <!-- Inherit other settings from Debug -->
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

@@ -21,6 +21,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		Testing|Any CPU = Testing|Any CPU
+		Testing|x64 = Testing|x64
+		Testing|x86 = Testing|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -35,6 +38,12 @@ Global
 		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Release|x64.Build.0 = Release|Any CPU
 		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Release|x86.ActiveCfg = Release|Any CPU
 		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Release|x86.Build.0 = Release|Any CPU
+		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Testing|Any CPU.Build.0 = Testing|Any CPU
+		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Testing|x64.ActiveCfg = Testing|Any CPU
+		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Testing|x64.Build.0 = Testing|Any CPU
+		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Testing|x86.ActiveCfg = Testing|Any CPU
+		{BF9B0010-FEBF-1197-3ECF-AFE1E1E5884D}.Testing|x86.Build.0 = Testing|Any CPU
 		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -47,6 +56,12 @@ Global
 		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Release|x64.Build.0 = Release|Any CPU
 		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Release|x86.ActiveCfg = Release|Any CPU
 		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Release|x86.Build.0 = Release|Any CPU
+		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Testing|Any CPU.Build.0 = Testing|Any CPU
+		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Testing|x64.ActiveCfg = Testing|Any CPU
+		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Testing|x64.Build.0 = Testing|Any CPU
+		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Testing|x86.ActiveCfg = Testing|Any CPU
+		{EC8F0193-72AB-4617-8BA5-407BBD823883}.Testing|x86.Build.0 = Testing|Any CPU
 		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -59,6 +74,12 @@ Global
 		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Release|x64.Build.0 = Release|Any CPU
 		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Release|x86.ActiveCfg = Release|Any CPU
 		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Release|x86.Build.0 = Release|Any CPU
+		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Testing|Any CPU.Build.0 = Testing|Any CPU
+		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Testing|x64.ActiveCfg = Testing|Any CPU
+		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Testing|x64.Build.0 = Testing|Any CPU
+		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Testing|x86.ActiveCfg = Testing|Any CPU
+		{BAD3D4F0-7497-4B5C-8ACA-A294E8DB7998}.Testing|x86.Build.0 = Testing|Any CPU
 		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -71,6 +92,12 @@ Global
 		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Release|x64.Build.0 = Release|Any CPU
 		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Release|x86.ActiveCfg = Release|Any CPU
 		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Release|x86.Build.0 = Release|Any CPU
+		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Testing|Any CPU.Build.0 = Testing|Any CPU
+		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Testing|x64.ActiveCfg = Testing|Any CPU
+		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Testing|x64.Build.0 = Testing|Any CPU
+		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Testing|x86.ActiveCfg = Testing|Any CPU
+		{25707D0D-9403-4069-8E1C-B4B9140A1D4B}.Testing|x86.Build.0 = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

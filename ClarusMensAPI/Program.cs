@@ -4,12 +4,20 @@ using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+
+// TEMPLATE: This file demonstrates the recommended API setup pattern for .NET 9 minimal APIs.
+// When using this project as a template, preserve the overall structure while customizing specific
+// service registrations, middleware configuration, and endpoints for your domain.
 
 // API contract version constant
 const string ApiContractVersion = "v0";
 
 var builder = WebApplication.CreateBuilder(args);
 
+// TEMPLATE: Service Registration Section - customize services but maintain organizational structure
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi(); // Using the simpler approach without options
@@ -22,6 +30,9 @@ builder.Services.AddSingleton<VersionService>();
 // This properly integrates with ASP.NET Core's configuration system and runs once at startup
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerVersionSetup>();
 builder.Services.AddSwaggerGen();
+
+// Add health checks
+builder.Services.AddHealthChecks();
 
 // Register services for question-answer functionality
 builder.Services.AddSingleton<IQuestionService, SimpleQuestionService>();
@@ -36,6 +47,7 @@ builder.Services.Configure<HttpsRedirectionOptions>(options =>
 
 var app = builder.Build();
 
+// TEMPLATE: Application Lifecycle Events - preserve this pattern for logging and startup tasks
 // Add version information to logs
 app.Lifetime.ApplicationStarted.Register(() =>
 {
@@ -43,6 +55,7 @@ app.Lifetime.ApplicationStarted.Register(() =>
     app.Logger.LogInformation("Application started. Version: {Version}", versionService.GetDisplayVersion());
 });
 
+// TEMPLATE: Middleware Configuration Section - maintain this order while customizing for your needs
 // Configure the HTTP request pipeline.
 // Only use HTTPS redirection in non-development environments
 // This prevents certificate issues during local development
@@ -65,18 +78,79 @@ app.UseSwaggerUI(options =>
 // No UI configuration for .NET 9 SimpleAPI - UI is automatically 
 // available at /openapi/ui when using MapOpenApi()
 
+// Map health checks endpoint
+app.MapHealthChecks("/health");
+
+// TEMPLATE: Root Endpoint Pattern - Customize content but preserve the approach
+/**
+ * Root API endpoint providing essential API information
+ * 
+ * IMPORTANT: .NET 9 Serialization Issue Workaround
+ * ----------------------------------------------
+ * There is a known issue in .NET 9 where the ResponseBodyPipeWriter doesn't 
+ * implement the PipeWriter.UnflushedBytes property that System.Text.Json
+ * expects. This causes failures with Results.Json() and even Results.Ok() with 
+ * serialized objects.
+ * 
+ * The error appears as:
+ * System.InvalidOperationException: The PipeWriter 'ResponseBodyPipeWriter' 
+ * does not implement PipeWriter.UnflushedBytes
+ * 
+ * Solution:
+ * We use the JsonSafeOk extension method from ResultsExtensions.cs that handles
+ * the serialization safely by converting to string first and using Results.Text().
+ * See docs/TROUBLESHOOTING.md for more details on this issue.
+ */
+app.MapGet("/", async (
+    IWebHostEnvironment env, 
+    VersionService versionService,
+    IConfiguration config,
+    HealthCheckService healthCheck) => 
+{
+    // Get health status asynchronously
+    var health = await healthCheck.CheckHealthAsync();
+    var status = health.Status == HealthStatus.Healthy ? "operational" : "degraded";
+    
+    // Get API info from configuration
+    var apiName = config["ApiInfo:Name"] ?? "Clarus Mens API";
+    
+    var response = new RootResponse
+    {
+        Status = status,
+        Name = apiName,
+        Version = versionService.GetDisplayVersion(),
+        Environment = env.EnvironmentName,
+        License = new LicenseInfo
+        {
+            Name = config["ApiInfo:License:Name"] ?? "Apache License 2.0",
+            Url = config["ApiInfo:License:Url"] ?? "https://www.apache.org/licenses/LICENSE-2.0"
+        },
+        Links = new LinksInfo
+        {
+            Documentation = "/swagger",
+            OpenApiSpec = "/openapi",
+            Health = "/health",
+            Source = "https://github.com/pstackebrandt/clarus-mens"
+        }
+    };
+    
+    // Use the safe JSON serialization extension method
+    return response.JsonSafeOk();
+});
+
+// TEMPLATE: API Endpoint Pattern - Replace with your own endpoints but follow this structure
 // Add the question-answer endpoint
 app.MapGet("/api/question", async (string query, IQuestionService questionService) =>
 {
     // Input validation
     if (string.IsNullOrWhiteSpace(query))
     {
-        return Results.BadRequest(new { error = "Question cannot be empty" });
+        return new { error = "Question cannot be empty" }.JsonSafeWithStatus(400);
     }
     
     if (query.Length > 500)
     {
-        return Results.BadRequest(new { error = "Question is too long. Maximum length is 500 characters." });
+        return new { error = "Question is too long. Maximum length is 500 characters." }.JsonSafeWithStatus(400);
     }
 
     try
@@ -84,22 +158,22 @@ app.MapGet("/api/question", async (string query, IQuestionService questionServic
         // Process the question and get an answer
         var answer = await questionService.GetAnswerAsync(query);
         
-        // Return the answer
-        return Results.Ok(new QuestionAnswerResponse
+        // Return the answer using safe serialization
+        return new QuestionAnswerResponse
         {
             Question = query,
             Answer = answer,
             ProcessedAt = DateTime.UtcNow
-        });
+        }.JsonSafeOk();
     }
     catch (Exception)
     {
         // No exception details needed
-        return Results.Problem(
-            title: "Error processing question",
-            detail: "An unexpected error occurred while processing your question.",
-            statusCode: 500
-        );
+        return new
+        {
+            title = "Error processing question",
+            detail = "An unexpected error occurred while processing your question."
+        }.JsonSafeWithStatus(500);
     }
 })
 .WithName("GetAnswer")
@@ -114,13 +188,14 @@ app.MapGet("/api/question", async (string query, IQuestionService questionServic
 
 /**
     Returns detailed version information of the API.
+    Uses the safe JSON serialization approach to avoid .NET 9 serialization issues.
 */
 app.MapGet("/api/version", (VersionService versionService) =>
 {
     var semVersion = versionService.GetSemVersion();
     var dotNetVersion = versionService.GetDotNetVersion();
     
-    return Results.Ok(new 
+    var response = new 
     { 
         version = versionService.GetVersionString(),
         semVer = new
@@ -133,7 +208,9 @@ app.MapGet("/api/version", (VersionService versionService) =>
             isPreRelease = semVersion.IsPreRelease
         },
         assemblyVersion = $"{dotNetVersion.Major}.{dotNetVersion.Minor}.{dotNetVersion.Build}.{dotNetVersion.Revision}"
-    });
+    };
+    
+    return response.JsonSafeOk();
 })
 .WithName("GetVersion")
 .WithOpenApi(operation => {
@@ -144,6 +221,40 @@ app.MapGet("/api/version", (VersionService versionService) =>
 
 app.Run();
 
+// TEMPLATE: Response Models - Replace with your own domain models but maintain the pattern of
+// clear separation between API response types and internal domain models
+// Response models
+public class RootResponse
+{
+    public string Status { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Version { get; set; } = string.Empty;
+    public string Environment { get; set; } = string.Empty;
+    public LicenseInfo License { get; set; } = new LicenseInfo();
+    public LinksInfo Links { get; set; } = new LinksInfo();
+}
+
+public class LicenseInfo
+{
+    public string Name { get; set; } = string.Empty;
+    public string Url { get; set; } = string.Empty;
+}
+
+public class LinksInfo
+{
+    [JsonPropertyName("documentation")]
+    public string Documentation { get; set; } = string.Empty;
+    
+    [JsonPropertyName("openapi_spec")]
+    public string OpenApiSpec { get; set; } = string.Empty;
+    
+    [JsonPropertyName("health")]
+    public string Health { get; set; } = string.Empty;
+    
+    [JsonPropertyName("source")]
+    public string Source { get; set; } = string.Empty;
+}
+
 // Response model
 record QuestionAnswerResponse
 {
@@ -152,6 +263,8 @@ record QuestionAnswerResponse
     public DateTime ProcessedAt { get; init; }
 }
 
+// TEMPLATE: Service interfaces and implementations - Replace with your domain services
+// but maintain this separation of concerns pattern
 // Service interfaces and implementations
 public interface IQuestionService
 {
@@ -188,26 +301,51 @@ public class SimpleQuestionService : IQuestionService
     }
 }
 
+// TEMPLATE: Configuration Pattern - This demonstrates the IConfigureOptions pattern,
+// which is a recommended way to handle complex configuration in ASP.NET Core
 // SwaggerVersionSetup configures Swagger documentation at application startup
 // This is the recommended way to configure Swagger in ASP.NET Core
 public class SwaggerVersionSetup : IConfigureOptions<SwaggerGenOptions>
 {
     private readonly VersionService _versionService;
     private readonly string _apiVersion;
+    private readonly IConfiguration _config;
 
     public SwaggerVersionSetup(VersionService versionService, IConfiguration config)
     {
         _versionService = versionService;
+        _config = config;
         _apiVersion = config["ApiVersion"] ?? "v0"; // Get from config or use default
     }
 
     public void Configure(SwaggerGenOptions options)
     {
+        var apiName = _config["ApiInfo:Name"] ?? "Clarus Mens API";
+        var apiDescription = _config["ApiInfo:Description"] ?? "API for Clarus Mens question answering service";
+        
         options.SwaggerDoc(_apiVersion, new OpenApiInfo
         {
-            Title = "Clarus Mens API",
+            Title = apiName,
             Version = _versionService.GetDisplayVersion(),
-            Description = "API for Clarus Mens question answering service"
+            Description = apiDescription,
+            Contact = new OpenApiContact
+            {
+                Name = _config["ApiInfo:Contact:Name"],
+                Email = _config["ApiInfo:Contact:Email"]
+            },
+            License = new OpenApiLicense
+            {
+                Name = _config["ApiInfo:License:Name"] ?? "Apache License 2.0",
+                Url = !string.IsNullOrEmpty(_config["ApiInfo:License:Url"]) 
+                    ? new Uri(_config["ApiInfo:License:Url"]!) 
+                    : new Uri("https://www.apache.org/licenses/LICENSE-2.0")
+            },
+            TermsOfService = !string.IsNullOrEmpty(_config["ApiInfo:TermsOfService"]) 
+                ? new Uri(_config["ApiInfo:TermsOfService"]!) 
+                : null
         });
     }
 }
+
+// Added for test accessibility
+public partial class Program { }

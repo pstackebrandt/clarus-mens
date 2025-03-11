@@ -5,6 +5,16 @@
 
 @ClarusMensAPI_HostAddress = http://localhost:5209
 
+### Root Endpoint
+# Access the API root endpoint which provides essential information
+GET {{ClarusMensAPI_HostAddress}}/
+Accept: application/json
+
+### Health Check Endpoint
+# Check the API health status
+GET {{ClarusMensAPI_HostAddress}}/health
+Accept: application/json
+
 ### OpenAPI JSON Definition
 # Access the API specification
 GET {{ClarusMensAPI_HostAddress}}/openapi/v1.json

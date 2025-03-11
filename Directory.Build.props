@@ -1,5 +1,10 @@
 <Project>
   <PropertyGroup>
+    <!-- Define SolutionDir if not already defined (for CLI builds) -->
+    <SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
+    <!-- Add Testing to available configurations -->
+    <Configurations>Debug;Release;Testing</Configurations>
+    
     <!-- Package version using SemVer (can include pre-release tags like -beta) -->
     <Version>0.6.0</Version>
     <!-- .NET requires 4-part versioning for assembly -->

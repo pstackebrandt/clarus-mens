@@ -4,21 +4,20 @@
     <SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
     <!-- Add Testing to available configurations -->
     <Configurations>Debug;Release;Testing</Configurations>
-    
     <!-- Package version using SemVer (can include pre-release tags like -beta) -->
-    <Version>0.6.0</Version>
+    <Version>0.7.0</Version>
     <!-- .NET requires 4-part versioning for assembly -->
-    <AssemblyVersion>0.6.0.0</AssemblyVersion>
-    <FileVersion>0.6.0.0</FileVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+    <FileVersion>0.7.0.0</FileVersion>
     <!-- Optional: Explicit pre-release label for NuGet -->
-    <VersionPrefix>0.6.0</VersionPrefix>
+    <VersionPrefix>0.7.0</VersionPrefix>
     <VersionSuffix>
     </VersionSuffix>
     <!-- Additional metadata -->
     <Product>Clarus Mens API</Product>
     <Description>API for Clarus Mens knowledge base</Description>
     <Authors>Peter Stackebrandt</Authors>
-    <Copyright>Copyright Â© $([System.DateTime]::Now.Year) Peter Stackebrandt</Copyright>
+    <Copyright>Copyright © $([System.DateTime]::Now.Year) Peter Stackebrandt</Copyright>
     <RepositoryUrl>https://github.com/pstackebrandt/clarus-mens</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>

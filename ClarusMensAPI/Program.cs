@@ -7,6 +7,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using ClarusMensAPI.Models.Responses;
+using ClarusMensAPI.Extensions;
+using ClarusMensAPI.Services.Interfaces;
 
 // TEMPLATE: This file demonstrates the recommended API setup pattern for .NET 9 minimal APIs.
 // When using this project as a template, preserve the overall structure while customizing specific
@@ -220,86 +223,6 @@ app.MapGet("/api/version", (VersionService versionService) =>
 });
 
 app.Run();
-
-// TEMPLATE: Response Models - Replace with your own domain models but maintain the pattern of
-// clear separation between API response types and internal domain models
-// Response models
-public class RootResponse
-{
-    public string Status { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public string Version { get; set; } = string.Empty;
-    public string Environment { get; set; } = string.Empty;
-    public LicenseInfo License { get; set; } = new LicenseInfo();
-    public LinksInfo Links { get; set; } = new LinksInfo();
-}
-
-public class LicenseInfo
-{
-    public string Name { get; set; } = string.Empty;
-    public string Url { get; set; } = string.Empty;
-}
-
-public class LinksInfo
-{
-    [JsonPropertyName("documentation")]
-    public string Documentation { get; set; } = string.Empty;
-    
-    [JsonPropertyName("openapi_spec")]
-    public string OpenApiSpec { get; set; } = string.Empty;
-    
-    [JsonPropertyName("health")]
-    public string Health { get; set; } = string.Empty;
-    
-    [JsonPropertyName("source")]
-    public string Source { get; set; } = string.Empty;
-}
-
-// Response model
-record QuestionAnswerResponse
-{
-    public string Question { get; init; } = string.Empty;
-    public string Answer { get; init; } = string.Empty;
-    public DateTime ProcessedAt { get; init; }
-}
-
-// TEMPLATE: Service interfaces and implementations - Replace with your domain services
-// but maintain this separation of concerns pattern
-// Service interfaces and implementations
-public interface IQuestionService
-{
-    Task<string> GetAnswerAsync(string question);
-}
-
-public class SimpleQuestionService : IQuestionService
-{
-    // For the MVP, this could be a simple implementation
-    // Later, you can replace this with actual AI integration
-    public Task<string> GetAnswerAsync(string question)
-    {
-        // Simple mapping of questions to answers
-        // In a real implementation, this would call an AI service
-        var answers = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            { "hello", "Hello there! How can I help you?" },
-            { "what is your name", "I am Clarus Mens, an AI assistant." },
-            { "what time is it", "I don't have real-time capabilities, but you can check your device's clock." },
-            { "how does this work", "You ask a question, and I provide an answer using my AI capabilities." }
-        };
-
-        // Check if we have a direct match
-        foreach (var key in answers.Keys)
-        {
-            if (question.Contains(key, StringComparison.OrdinalIgnoreCase))
-            {
-                return Task.FromResult(answers[key]);
-            }
-        }
-
-        // Default response
-        return Task.FromResult("I don't have an answer for that question yet. As we grow, I'll learn to answer more questions.");
-    }
-}
 
 // TEMPLATE: Configuration Pattern - This demonstrates the IConfigureOptions pattern,
 // which is a recommended way to handle complex configuration in ASP.NET Core

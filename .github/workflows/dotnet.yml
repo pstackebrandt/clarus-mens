@@ -31,5 +31,9 @@ jobs:
     - name: Build Functional Tests
       run: dotnet build -c Testing --no-restore -o _testbuild/tests/ClarusMensAPI.FunctionalTests
       working-directory: tests/ClarusMensAPI.FunctionalTests
-    - name: Test
-      run: dotnet test -c Testing --no-build --verbosity normal --test-adapter-path:_testbuild
+    - name: Test Unit Tests
+      run: dotnet test _testbuild/tests/ClarusMensAPI.UnitTests/ClarusMensAPI.UnitTests.dll -c Testing --no-build --verbosity normal
+    - name: Test Integration Tests
+      run: dotnet test _testbuild/tests/ClarusMensAPI.IntegrationTests/ClarusMensAPI.IntegrationTests.dll -c Testing --no-build --verbosity normal
+    - name: Test Functional Tests
+      run: dotnet test _testbuild/tests/ClarusMensAPI.FunctionalTests/ClarusMensAPI.FunctionalTests.dll -c Testing --no-build --verbosity normal

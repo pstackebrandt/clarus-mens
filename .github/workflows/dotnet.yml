@@ -1,7 +1,10 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: "build and test clarus-mens"
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
   push:
@@ -22,7 +25,21 @@ jobs:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Build Unit Tests
+      run: dotnet build -c Testing --no-restore -o ../../_testbuild/tests/ClarusMensAPI.UnitTests
+      working-directory: tests/ClarusMensAPI.UnitTests
+    - name: Build Integration Tests
+      run: dotnet build -c Testing --no-restore -o ../../_testbuild/tests/ClarusMensAPI.IntegrationTests
+      working-directory: tests/ClarusMensAPI.IntegrationTests
+    - name: Build Functional Tests
+      run: dotnet build -c Testing --no-restore -o ../../_testbuild/tests/ClarusMensAPI.FunctionalTests
+      working-directory: tests/ClarusMensAPI.FunctionalTests
+    - name: Test Unit Tests
+      run: dotnet test ../../_testbuild/tests/ClarusMensAPI.UnitTests/ClarusMensAPI.UnitTests.dll --no-build --verbosity normal
+      working-directory: tests/ClarusMensAPI.UnitTests
+    - name: Test Integration Tests
+      run: dotnet test ../../_testbuild/tests/ClarusMensAPI.IntegrationTests/ClarusMensAPI.IntegrationTests.dll --no-build --verbosity normal
+      working-directory: tests/ClarusMensAPI.IntegrationTests
+    - name: Test Functional Tests
+      run: dotnet test ../../_testbuild/tests/ClarusMensAPI.FunctionalTests/ClarusMensAPI.FunctionalTests.dll --no-build --verbosity normal
+      working-directory: tests/ClarusMensAPI.FunctionalTests

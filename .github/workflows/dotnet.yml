@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+    - name: BuildForTesting
+      run: dotnet build -c Testing --no-restore -o _testbuild
     - name: Test
-      run: dotnet test -c Testing --no-build --verbosity normal
+      run: dotnet test -c Testing --no-build --verbosity normal --test-adapter-path:_testbuild

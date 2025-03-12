@@ -10,6 +10,7 @@ using System.Text.Json;
 using ClarusMensAPI.Models.Responses;
 using ClarusMensAPI.Extensions;
 using ClarusMensAPI.Services.Interfaces;
+using ClarusMensAPI.Configuration;
 
 // TEMPLATE: This file demonstrates the recommended API setup pattern for .NET 9 minimal APIs.
 // When using this project as a template, preserve the overall structure while customizing specific
@@ -223,52 +224,6 @@ app.MapGet("/api/version", (VersionService versionService) =>
 });
 
 app.Run();
-
-// TEMPLATE: Configuration Pattern - This demonstrates the IConfigureOptions pattern,
-// which is a recommended way to handle complex configuration in ASP.NET Core
-// SwaggerVersionSetup configures Swagger documentation at application startup
-// This is the recommended way to configure Swagger in ASP.NET Core
-public class SwaggerVersionSetup : IConfigureOptions<SwaggerGenOptions>
-{
-    private readonly VersionService _versionService;
-    private readonly string _apiVersion;
-    private readonly IConfiguration _config;
-
-    public SwaggerVersionSetup(VersionService versionService, IConfiguration config)
-    {
-        _versionService = versionService;
-        _config = config;
-        _apiVersion = config["ApiVersion"] ?? "v0"; // Get from config or use default
-    }
-
-    public void Configure(SwaggerGenOptions options)
-    {
-        var apiName = _config["ApiInfo:Name"] ?? "Clarus Mens API";
-        var apiDescription = _config["ApiInfo:Description"] ?? "API for Clarus Mens question answering service";
-        
-        options.SwaggerDoc(_apiVersion, new OpenApiInfo
-        {
-            Title = apiName,
-            Version = _versionService.GetDisplayVersion(),
-            Description = apiDescription,
-            Contact = new OpenApiContact
-            {
-                Name = _config["ApiInfo:Contact:Name"],
-                Email = _config["ApiInfo:Contact:Email"]
-            },
-            License = new OpenApiLicense
-            {
-                Name = _config["ApiInfo:License:Name"] ?? "Apache License 2.0",
-                Url = !string.IsNullOrEmpty(_config["ApiInfo:License:Url"]) 
-                    ? new Uri(_config["ApiInfo:License:Url"]!) 
-                    : new Uri("https://www.apache.org/licenses/LICENSE-2.0")
-            },
-            TermsOfService = !string.IsNullOrEmpty(_config["ApiInfo:TermsOfService"]) 
-                ? new Uri(_config["ApiInfo:TermsOfService"]!) 
-                : null
-        });
-    }
-}
 
 // Added for test accessibility
 public partial class Program { }

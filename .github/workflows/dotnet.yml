@@ -22,7 +22,14 @@ jobs:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: BuildForTesting
-      run: dotnet build -c Testing --no-restore -o _testbuild
+    - name: Build Unit Tests
+      run: dotnet build -c Testing --no-restore -o _testbuild/tests/ClarusMensAPI.UnitTests
+      working-directory: tests/ClarusMensAPI.UnitTests
+    - name: Build Integration Tests
+      run: dotnet build -c Testing --no-restore -o _testbuild/tests/ClarusMensAPI.IntegrationTests
+      working-directory: tests/ClarusMensAPI.IntegrationTests
+    - name: Build Functional Tests
+      run: dotnet build -c Testing --no-restore -o _testbuild/tests/ClarusMensAPI.FunctionalTests
+      working-directory: tests/ClarusMensAPI.FunctionalTests
     - name: Test
       run: dotnet test -c Testing --no-build --verbosity normal --test-adapter-path:_testbuild

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using System.Text.Json;
 
 namespace ClarusMensAPI.Extensions;

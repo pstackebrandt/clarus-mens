@@ -22,32 +22,13 @@ const string ApiContractVersion = "v0";
 var builder = WebApplication.CreateBuilder(args);
 
 // TEMPLATE: Service Registration Section - customize services but maintain organizational structure
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi(); // Using the simpler approach without options
-builder.Services.AddSingleton<CustomOpenApiTransformer>();
-
-// Register version service (make sure it's registered before Swagger config)
-builder.Services.AddSingleton<VersionService>();
-
-// Configure Swagger through the SwaggerVersionSetup class which uses the IConfigureOptions pattern
-// This properly integrates with ASP.NET Core's configuration system and runs once at startup
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerVersionSetup>();
-builder.Services.AddSwaggerGen();
+// Register all application services using extension methods
+builder.Services.AddApplicationServices();
+builder.Services.AddOpenApiServices(ApiContractVersion);
+builder.Services.AddHttpsRedirection(7043);
 
 // Add health checks
 builder.Services.AddHealthChecks();
-
-// Register services for question-answer functionality
-builder.Services.AddSingleton<IQuestionService, SimpleQuestionService>();
-
-// Configure HTTPS redirection
-// This explicitly sets the HTTPS port to prevent the warning:
-// "Failed to determine the https port for redirect"
-builder.Services.Configure<HttpsRedirectionOptions>(options =>
-{
-    options.HttpsPort = 7043; // Or whatever your HTTPS port should be
-});
 
 var app = builder.Build();
 

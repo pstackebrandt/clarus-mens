@@ -2,6 +2,8 @@ using ClarusMensAPI.Services.Interfaces;
 
 namespace ClarusMensAPI.Services;
 
+// TEMPLATE: Service interfaces and implementations - Replace with your domain services
+// but maintain this separation of concerns pattern
 public class SimpleQuestionService : IQuestionService
 {
     // For the MVP, this could be a simple implementation

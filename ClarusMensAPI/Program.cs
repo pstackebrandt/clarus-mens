@@ -43,5 +43,13 @@ app.MapApplicationEndpoints();
 
 await app.RunAsync();
 
-// Added for test accessibility
-public static partial class Program { }
+// Program class must NOT be static to support WebApplicationFactory<Program> in tests.
+// Static classes cannot be used as generic type parameters (CS0718 error).
+// While top-level statements in .NET 6+ typically use a static Program class,
+// for testability we need a non-static class that testing frameworks can instantiate.
+public partial class Program
+{
+    // Protected constructor allows WebApplicationFactory to create instances
+    // while preventing direct instantiation elsewhere
+    protected Program() { }
+}

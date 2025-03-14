@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Bump Patch Version",
+            "type": "shell",
+            "command": "pwsh -File ${workspaceFolder}/Update-Version.ps1 -VersionType patch",
+            "problemMatcher": [],
+            "group": "none"
+        },
+        {
+            "label": "Bump Minor Version",
+            "type": "shell",
+            "command": "pwsh -File ${workspaceFolder}/Update-Version.ps1 -VersionType minor",
+            "problemMatcher": [],
+            "group": "none"
+        },
+        {
+            "label": "Bump Major Version",
+            "type": "shell",
+            "command": "pwsh -File ${workspaceFolder}/Update-Version.ps1 -VersionType major",
+            "problemMatcher": [],
+            "group": "none"
+        }
+    ]
+} 

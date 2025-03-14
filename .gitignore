@@ -4,12 +4,17 @@ obj/
 _testbuild/
 
 # User-spezifische Dateien
-.vscode/
+.vscode/*
+
 .idea/
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
+
+# User specific settings I want in the repo for now.
+!.vscode/settings.json
+!.vscode/tasks.json
 
 # Logs und temporäre Dateien
 *.log

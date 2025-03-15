@@ -1,6 +1,7 @@
 # API Architecture
 
 This document describes the recommended API setup pattern for .NET 9 minimal APIs in the Clarus Mens project.
+For detailed information about the project's folder structure, please refer to [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md).
 
 ## Overview
 

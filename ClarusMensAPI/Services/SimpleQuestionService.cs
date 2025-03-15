@@ -20,16 +20,12 @@ public class SimpleQuestionService : IQuestionService
             { "how does this work", "You ask a question, and I provide an answer using my AI capabilities." }
         };
 
-        // Check if we have a direct match
-        foreach (var key in answers.Keys)
-        {
-            if (question.Contains(key, StringComparison.OrdinalIgnoreCase))
-            {
-                return Task.FromResult(answers[key]);
-            }
-        }
-
-        // Default response
-        return Task.FromResult("I don't have an answer for that question yet. As we grow, I'll learn to answer more questions.");
+        // Check if we have a direct match using LINQ
+        return Task.FromResult(
+            answers.Keys
+                .Where(key => question.Contains(key, StringComparison.OrdinalIgnoreCase))
+                .Select(key => answers[key])
+                .FirstOrDefault()
+            ?? "I don't have an answer for that question yet. As we grow, I'll learn to answer more questions.");
     }
-} 
+}

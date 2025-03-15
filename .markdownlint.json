@@ -1,0 +1,19 @@
+{
+  "default": true,
+  "MD013": {
+    "line_length": 120,
+    "code_blocks": false,
+    "tables": false
+  },
+  "MD033": {
+    "allowed_elements": ["br", "img", "a"]
+  },
+  "MD036": false,
+  "MD041": false,
+  "MD026": {
+    "punctuation": ".,;:!"
+  },
+  "MD024": {
+    "siblings_only": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
+    },
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "csharp.format.enable": true,
+    "markdown.extension.toc.levels": "2..6",
+    "markdownlint.config": {
+      "extends": "${workspaceFolder}/.markdownlint.json"
+    }
+  }

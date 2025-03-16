@@ -12,6 +12,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddOpenApiServices(ApiContractVersion);
 builder.Services.AddHttpsRedirection(7043);
 builder.Services.AddHealthChecks();
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 
@@ -29,7 +30,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 // OpenAPI/Swagger Configuration
-// I make OpenAPI available regardless of environment.
+// Swagger will be active in production so interviewers will be able to test the API.
 app.MapOpenApi(); // Makes JSON spec available at /openapi
 app.UseSwagger();
 app.UseSwaggerUI(options =>
@@ -40,6 +41,7 @@ app.UseSwaggerUI(options =>
 
 // Endpoint Registration
 app.MapApplicationEndpoints();
+app.MapHealthChecks("/health");
 
 await app.RunAsync();
 

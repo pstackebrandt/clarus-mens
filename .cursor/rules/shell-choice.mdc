@@ -1,0 +1,16 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Guidelines for choosing between PowerShell and Git Bash
+globs: "*.ps1", "*.sh", "*.md"
+alwaysApply: false
+---
+
+# Shell Choice Guidelines
+
+- Use PowerShell for Windows-specific tasks and system automation
+- Use Git Bash for cross-platform scripts and git operations
+- Prefer PowerShell when working with .NET or Windows services

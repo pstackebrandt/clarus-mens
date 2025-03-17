@@ -1,0 +1,30 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Guidelines for creating PowerShell scripts
+globs: "*.ps1", "*.psm1", "*.psd1", "*.md", "*.txt"
+alwaysApply: false
+---
+
+# Selected PowerShell Scripting Guidelines
+
+Prefer PowerShell 7 commands for Windows 11, not Bash syntax.
+Prefer PowerShell-native approaches over cmd.exe commands.
+
+## Path Handling
+- Use backslashes in Windows paths: `C:\Users\`
+- Use `Join-Path` for path construction
+- Always quote paths with spaces
+
+## Error Handling
+- Check `$LASTEXITCODE` after external commands
+- Use try/catch blocks for risky operations
+- Log errors with `Write-Error` to stderr
+
+## Git Bash Integration
+- Use `Invoke-GitBash.ps1` for bash scripts
+- Handle path conversions
+- Propagate exit codes correctly

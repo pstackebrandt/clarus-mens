@@ -3,6 +3,28 @@
 This document provides a comprehensive guide for containerizing an ASP.NET Core application with Docker
 and deploying it to Azure App Service.
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Benefits of This Approach](#benefits-of-this-approach)
+- [Prerequisites](#prerequisites)
+- [Step 1: Containerize Your ASP.NET Core Application](#step-1-containerize-your-aspnet-core-application)
+  - [Create a Dockerfile](#create-a-dockerfile)
+  - [Create .dockerignore](#create-dockerignore)
+  - [Build and Test Locally](#build-and-test-locally)
+  - [Building for Different Purposes](#building-for-different-purposes)
+    - [Production Build (Default)](#production-build-default)
+    - [Testing Build](#testing-build)
+- [Step 2: Set Up Azure Resources](#step-2-set-up-azure-resources)
+  - [Create Azure App Service Plan and Web App](#create-azure-app-service-plan-and-web-app)
+- [Step 3: Set Up GitHub Actions for CI/CD](#step-3-set-up-github-actions-for-cicd)
+- [Step 4: Configure Azure Container Registry](#step-4-configure-azure-container-registry)
+- [Step 5: Create Azure Service Principal for GitHub Actions](#step-5-create-azure-service-principal-for-github-actions)
+- [Step 6: Configure Application Settings](#step-6-configure-application-settings)
+- [Future Database Integration](#future-database-integration)
+- [Troubleshooting](#troubleshooting)
+- [Resources](#resources)
+
 ## Benefits of This Approach
 
 - **Containerization**: Learn Docker, an essential skill for modern development
@@ -67,7 +89,7 @@ ENTRYPOINT ["dotnet", "ClarusMensAPI.dll"]
 
 Create a `.dockerignore` file to exclude unnecessary files:
 
-```.dockerignore
+```dockerignore
 **/.classpath
 **/.dockerignore
 **/.env
@@ -103,6 +125,30 @@ docker run -p 5000:80 clarusmens-api
 ```
 
 Visit `http://localhost:5000/swagger` to verify the application works.
+
+### Building for Different Purposes
+
+The Dockerfile supports conditional inclusion of test projects using build arguments:
+
+#### Production Build (Default)
+
+```powershell
+docker build -t clarusmens-api .
+```
+
+This builds a production-optimized image without test projects.
+
+#### Testing Build
+
+```powershell
+docker build -t clarusmens-api-test --build-arg INCLUDE_TESTS=true .
+```
+
+This includes test projects in the image, useful for:
+
+- Running tests in containerized environments
+- Testing container-specific behaviors
+- CI/CD pipelines that require containerized testing
 
 ## Step 2: Set Up Azure Resources
 

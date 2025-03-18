@@ -72,11 +72,12 @@ dotnet test -c Testing -v detailed
 
 When running tests, you may see this warning:
 
-```
+```text
 No test is available in [...]\ClarusMensAPI.IntegrationTests.dll
 ```
 
 This is **expected behavior** because:
+
 - The IntegrationTests project is set up as a placeholder for future integration tests
 - It currently has no test classes or methods implemented
 - The warning can be safely ignored
@@ -158,7 +159,7 @@ Our tests are integrated into our CI/CD pipeline as follows:
 
 1. **Test Discovery**: The pipeline automatically discovers all tests using MSTest's discovery mechanism
 2. **Parallel Execution**: Tests are executed in parallel, with unit tests running first, followed by functional tests
-3. **Test Reports**: 
+3. **Test Reports**:
    - Results are published to Azure DevOps/GitHub Actions dashboard
    - JUnit-compatible test result files are generated
    - Code coverage reports in Cobertura format are available
@@ -176,3 +177,27 @@ To reproduce CI test execution locally:
 # Same configuration used in CI
 dotnet test -c Testing --blame-hang-timeout 5m --logger "trx;LogFileName=test-results.trx"
 ```
+
+## Docker-Based Testing
+
+This project supports building Docker images with or without tests:
+
+### Including Tests in Docker Image
+
+```powershell
+docker build -t clarusmens-api-test --build-arg INCLUDE_TESTS=true .
+```
+
+### When to Use Docker for Testing
+
+- Container-specific functionality testing
+- CI/CD pipelines in containerized environments
+- Testing in environments identical to production
+- Functional tests that require specific container configuration
+
+### When to Use Direct Testing (Non-Docker)
+
+- Local development for faster test cycles
+- Normal CI/CD workflows (our GitHub Actions workflow)
+- Code coverage analysis
+- Running individual test categories or projects

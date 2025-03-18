@@ -1,3 +1,15 @@
+/*
+ * Program.cs
+ * 
+ * Entry point and configuration for the Clarus Mens API.
+ * This file:
+ * - Initializes the web application
+ * - Configures services, middleware, and endpoints
+ * - Sets up OpenAPI/Swagger documentation
+ * - Defines application lifecycle events
+ * - Contains a non-static Program class to support WebApplicationFactory testing
+ */
+
 using ClarusMensAPI.Services;
 using ClarusMensAPI.Extensions;
 using ClarusMensAPI.Endpoints;
@@ -41,7 +53,6 @@ app.UseSwaggerUI(options =>
 
 // Endpoint Registration
 app.MapApplicationEndpoints();
-app.MapHealthChecks("/health");
 
 await app.RunAsync();
 

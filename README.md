@@ -2,9 +2,29 @@
 
 A clear mind, a clear path forward.
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [About](#about)
+- [Using as a Template](#using-as-a-template)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Testing the API](#testing-the-api)
+  - [Automated Tests](#automated-tests)
+  - [Docker-based Testing](#docker-based-testing)
+  - [Using REST Client](#using-rest-client)
+  - [Using Browser or Postman](#using-browser-or-postman)
+- [Project Structure](#project-structure)
+- [Development](#development)
+  - [Using Hot Reload](#using-hot-reload)
+- [Documentation](#documentation)
+- [Versioning](#versioning)
+- [License](#license)
+
 ## About
 
-ClarusMens is a .NET-based API project  that generates structured answers (MVP), learning questions with answers, and quizzes based on user input.
+ClarusMens is a .NET-based API project  that generates structured answers (MVP),
+ learning questions with answers, and quizzes based on user input.
 
 ## Using as a Template
 
@@ -70,7 +90,8 @@ Run the full test suite with the Testing configuration:
 dotnet test -c Testing
 ```
 
-The `Testing` configuration is a specialized build configuration optimized for test execution, with separate output directories and test-specific settings.
+The `Testing` configuration is a specialized build configuration optimized for test execution,
+ with separate output directories and test-specific settings.
 
 > **Note**: You may see a warning about no tests in the IntegrationTests project - this is expected and can be ignored.
 
@@ -80,6 +101,19 @@ If you need to configure test execution, you can set environment variables:
 $env:CLARUSMENS_TEST_TIMEOUT = 60000  # Set longer timeout (in ms)
 dotnet test -c Testing
 ```
+
+### Docker-based Testing
+
+Tests can be included in the Docker image if needed:
+
+```powershell
+docker build -t clarusmens-api-test --target=test .
+docker run -it clarusmens-api-test
+```
+
+For standard testing, use the non-containerized approach detailed above.
+
+For detailed Docker build and testing documentation, see [Docker Build Documentation](docs/deployment/docker-build-documentation.md).
 
 For more detailed testing options, CI/CD integration details, and environment variables, see the [tests README](./tests/README.md).
 

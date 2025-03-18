@@ -8,7 +8,8 @@ This document contains solutions to common issues encountered during development
 - [.NET 9 Serialization Issues](#net-9-serialization-issues)
   - [PipeWriter UnflushedBytes Exception](#pipewriter-unflushedbytes-exception)
 - [Testing Issues](#testing-issues)
-  - ["No test is available in ClarusMensAPI.IntegrationTests.dll"](#no-test-is-available-in-clarusmensapiintegrationtestsdll)
+- ["No test is available in
+ClarusMensAPI.IntegrationTests.dll"](#no-test-is-available-in-clarusmensapiintegrationtestsdll)
   - [Tests Pass Locally But Fail in CI Pipeline](#tests-pass-locally-but-fail-in-ci-pipeline)
   - [Tests Are Too Slow](#tests-are-too-slow)
 - [Common Development Environment Issues](#common-development-environment-issues)
@@ -19,23 +20,31 @@ This document contains solutions to common issues encountered during development
 
 **Problem:**
 
-When using `Results.Json()` or `Results.Ok()` with serialized objects in ASP.NET Core minimal APIs on .NET 9, you may encounter the following exception:
+When using `Results.Json()` or `Results.Ok()` with serialized objects in ASP.NET Core minimal APIs on .NET 9, you may
+encounter the following exception:
 
 ```powershell
 System.InvalidOperationException: The PipeWriter 'ResponseBodyPipeWriter' does not implement PipeWriter.UnflushedBytes.
-   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_PipeWriterDoesNotImplementUnflushedBytes(PipeWriter pipeWriter)
-   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
-   at Microsoft.AspNetCore.Http.HttpResponseJsonExtensions.<WriteAsJsonAsync>g__WriteAsJsonAsyncSlow|5_0[TValue](HttpResponse response, TValue value, JsonTypeInfo`1 jsonTypeInfo, CancellationToken cancellationToken)
+at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_PipeWriterDoesNotImplementUnflushedBytes(PipeWriter
+pipeWriter)
+at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32
+flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+at
+Microsoft.AspNetCore.Http.HttpResponseJsonExtensions.<WriteAsJsonAsync>g__WriteAsJsonAsyncSlow|5_0[TValue](HttpResponse
+response, TValue value, JsonTypeInfo`1 jsonTypeInfo, CancellationToken cancellationToken)
    at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
 ```
 
 **Cause:**
 
-In .NET 9, there appears to be an incompatibility between System.Text.Json serialization and the ASP.NET Core HTTP response pipeline. The `PipeWriter` implementation in .NET 9 does not provide the `UnflushedBytes` property expected by the serializer.
+In .NET 9, there appears to be an incompatibility between System.Text.Json serialization and the ASP.NET Core HTTP
+response pipeline. The `PipeWriter` implementation in .NET 9 does not provide the `UnflushedBytes` property expected by
+the serializer.
 
 **Solution:**
 
-Instead of using `Results.Json()` or `Results.Ok()` with objects that need serialization, use our extension methods that safely handle JSON serialization:
+Instead of using `Results.Json()` or `Results.Ok()` with objects that need serialization, use our extension methods that
+safely handle JSON serialization:
 
 ```csharp
 // DO NOT use this (will throw exception in .NET 9):
@@ -52,11 +61,13 @@ return response.JsonSafeOk();
 return new { error = "Invalid input" }.JsonSafeWithStatus(400);
 ```
 
-These extension methods work by manually serializing to a JSON string and returning it with the appropriate content type, avoiding the problematic serialization path.
+These extension methods work by manually serializing to a JSON string and returning it with the appropriate content
+type, avoiding the problematic serialization path.
 
 **Test Verification:**
 
-The issue was identified during functional testing with endpoint tests that verify HTTP status codes and response payloads. The fix was confirmed by running the test suite and verifying all tests pass.
+The issue was identified during functional testing with endpoint tests that verify HTTP status codes and response
+payloads. The fix was confirmed by running the test suite and verifying all tests pass.
 
 **References:**
 
@@ -78,7 +89,8 @@ No test is available in [...]\ClarusMensAPI.IntegrationTests.dll
 
 **Cause:**
 
-The IntegrationTests project is currently set up as a placeholder for future integration tests but doesn't contain any test methods yet.
+The IntegrationTests project is currently set up as a placeholder for future integration tests but doesn't contain any
+test methods yet.
 
 **Solution:**
 

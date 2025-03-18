@@ -2,7 +2,8 @@
 
 ## Goal
 
-ClarusMensAPI aims to be a robust AI-driven API that generates structured answers, learning questions, and quizzes based on user input, expanding beyond the MVP to improve functionality, usability, and security.
+ClarusMensAPI aims to be a robust AI-driven API that generates structured answers, learning questions, and quizzes based
+on user input, expanding beyond the MVP to improve functionality, usability, and security.
 
 ## Core Features
 
@@ -45,4 +46,5 @@ ClarusMensAPI aims to be a robust AI-driven API that generates structured answer
 
 - **Multilingual Support**: Extend AI models to support multiple languages.
 
-This specification builds upon the MVP, ensuring that ClarusMensAPI evolves into a powerful, scalable, and secure AI-driven API for learning and knowledge generation.
+This specification builds upon the MVP, ensuring that ClarusMensAPI evolves into a powerful, scalable,
+and secure AI-driven API for learning and knowledge generation.

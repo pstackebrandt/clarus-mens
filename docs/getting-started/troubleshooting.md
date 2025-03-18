@@ -4,8 +4,13 @@ This document contains solutions to common issues encountered during development
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [.NET 9 Serialization Issues](#net-9-serialization-issues)
+  - [PipeWriter UnflushedBytes Exception](#pipewriter-unflushedbytes-exception)
 - [Testing Issues](#testing-issues)
+  - ["No test is available in ClarusMensAPI.IntegrationTests.dll"](#no-test-is-available-in-clarusmensapiintegrationtestsdll)
+  - [Tests Pass Locally But Fail in CI Pipeline](#tests-pass-locally-but-fail-in-ci-pipeline)
+  - [Tests Are Too Slow](#tests-are-too-slow)
 - [Common Development Environment Issues](#common-development-environment-issues)
 
 ## .NET 9 Serialization Issues

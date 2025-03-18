@@ -1,5 +1,26 @@
 # Shell Usage Guidelines
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Overview](#overview)
+- [Why Two Shells?](#why-two-shells)
+- [Known Issues with PowerShell](#known-issues-with-powershell)
+  - [Git Hooks in PowerShell](#git-hooks-in-powershell)
+  - [Project-Specific Examples](#project-specific-examples)
+- [Recommended Shell Usage](#recommended-shell-usage)
+  - [Use PowerShell For](#use-powershell-for)
+  - [Use Git Bash For](#use-git-bash-for)
+- [Script Conversion Guidelines](#script-conversion-guidelines)
+  - [Converting PowerShell Git Hooks to Bash](#converting-powershell-git-hooks-to-bash)
+- [Best Practices](#best-practices)
+- [Example: Calling Git Bash from PowerShell](#example-calling-git-bash-from-powershell)
+- [Troubleshooting](#troubleshooting)
+- [Integrating Git Bash with PowerShell](#integrating-git-bash-with-powershell)
+  - [Using Invoke-GitBash Helper](#using-invoke-gitbash-helper)
+  - [Lessons Learned](#lessons-learned)
+- [Example: Real-World Usage](#example-real-world-usage)
+
 ## Overview
 
 This document outlines our recommended approach for using PowerShell and Git Bash in parallel
@@ -157,7 +178,8 @@ If you encounter issues:
 
 ### Using Invoke-GitBash Helper
 
-TODO: This contains detail information about the helper function. We should hold it in the helper or in a specific md file.
+TODO: This contains detail information about the helper function. We should hold it in the helper or in a specific md
+file.
 
 We've created a PowerShell helper function to properly invoke Git Bash scripts from PowerShell.
 This solves common issues with path conversion and script execution:

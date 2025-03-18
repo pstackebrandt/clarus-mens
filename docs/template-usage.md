@@ -1,6 +1,8 @@
 # Using ClarusMens as a Template
 
-This document provides guidance on how to use the ClarusMens API project as a template for creating new .NET API projects. The template includes best practices, reusable patterns, and solutions to common issues that will accelerate your development process.
+This document provides guidance on how to use the ClarusMens API project as a template for creating new .NET API
+projects. The template includes best practices, reusable patterns, and solutions to common issues that will accelerate
+your development process.
 
 ## Why Use This Template?
 
@@ -166,6 +168,7 @@ If you encounter compiler errors after renaming:
 ### Issue: Tests failing after customization
 
 Check:
+
 1. Whether test configuration still matches your updated API
 2. If test dependencies are properly registered
 3. If any hardcoded values in tests need updating
@@ -173,8 +176,10 @@ Check:
 ## Template Versioning
 
 This template is based on:
+
 - .NET 9.0
 - ASP.NET Core 9.0
 - MSTest 3.x
 
-When .NET or its packages receive major updates, consider updating the template to benefit from new features and patterns. 
+When .NET or its packages receive major updates, consider updating the template to benefit from new features and
+patterns.

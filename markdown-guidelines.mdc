@@ -1,0 +1,39 @@
+---
+description: Guidelines for creating effective Markdown files
+globs: "*.md", "*.markdown", "README*"
+alwaysApply: false
+---
+
+# Markdown Best Practices
+
+## Document Structure
+- Use a single `# Title` at the top
+- Follow with a brief description
+- Organize content with hierarchical headings (`##`, `###`)
+- Include a TOC for documents longer than 3 sections
+
+## Formatting
+- Use **bold** for emphasis, *italics* for terminology
+- Code blocks: Triple backticks with language identifier
+- Inline code: Single backticks for commands, variables
+- Horizontal rules (`---`) only to separate major sections
+
+## Lists
+- Use ordered lists (1. 2. 3.) for sequential steps
+- Use unordered lists (- or *) for non-sequential items
+- Maintain consistent indentation for nested lists
+
+## Links and References
+- Use descriptive link text: `[descriptive text](URL)`
+- Prefer relative links for project files
+- Group related references at document bottom
+
+## Images
+- Include alt text: `![alt text](image-path)`
+- Keep width under 900px for readability
+- Store images in dedicated `/assets` or `/images` folder
+
+## Tables
+- Use tables for structured data comparisons
+- Include header row and alignment indicators
+- Keep tables simple; avoid nested tables 

@@ -1,11 +1,11 @@
 ---
-description: 
+description: Guidelines for choosing between PowerShell and Git Bash
 globs: 
 alwaysApply: false
 ---
 ---
 description: Guidelines for choosing between PowerShell and Git Bash
-globs: "*.ps1", "*.sh", "*.md"
+globs: "*.ps1", "*.sh", "*.psm1", "*.psd1", "*.md"
 alwaysApply: false
 ---
 

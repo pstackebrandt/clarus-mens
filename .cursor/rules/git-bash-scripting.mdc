@@ -1,5 +1,10 @@
 ---
 description: Guidelines for creating and using Git Bash scripts
+globs: 
+alwaysApply: false
+---
+---
+description: Guidelines for creating and using Git Bash scripts
 globs: "*.sh"
 alwaysApply: false
 ---

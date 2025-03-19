@@ -1,10 +1,5 @@
 ---
 description: Guidelines for creating Markdown files
-globs: 
-alwaysApply: false
----
----
-description: Guidelines for creating Markdown files
 globs: "*.md", "*.markdown", "README*"
 alwaysApply: false
 ---
@@ -18,6 +13,8 @@ alwaysApply: false
 - Include a TOC for documents longer than 3 sections
 
 ## Formatting
+- Keep lines under 120 characters for readability
+- Break long lines at natural points (after periods, commas, or logical breaks)
 - Use **bold** for emphasis, *italics* for terminology
 - Code blocks: Triple backticks with language identifier
 - Inline code: Single backticks for commands, variables

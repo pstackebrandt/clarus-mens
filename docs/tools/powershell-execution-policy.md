@@ -30,5 +30,6 @@ in the current session:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process
-.\Update-Version.ps1 -VersionType minor
+# Run from solution root
+.\scripts\Update-Version.ps1 -VersionType minor
 ```

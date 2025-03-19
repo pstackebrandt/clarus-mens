@@ -1,5 +1,19 @@
 # Pre-Publishing Checklist for ClarusMens API
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Configuration and Environment Settings](#configuration-and-environment-settings)
+- [Security Considerations](#security-considerations)
+- [Application Health and Monitoring](#application-health-and-monitoring)
+- [Performance Optimization](#performance-optimization)
+- [Docker Configuration](#docker-configuration)
+- [Infrastructure as Code](#infrastructure-as-code)
+- [Database Considerations (Future)](#database-considerations-future)
+- [Specific Recommendations for Current API](#specific-recommendations-for-current-api)
+- [Testing Checklist](#testing-checklist)
+- [Documentation](#documentation)
+
 Before deploying your ASP.NET Core application to Azure using Docker,
  ensure that you've completed the following preparation steps:
 
@@ -92,14 +106,14 @@ Based on the current state of your application, here are specific actions to tak
 
 ## Testing Checklist
 
-- [ ] Run all unit and integration tests
-- [ ] Test the Docker container locally before deployment
+- [x] Run all unit and integration tests
+- [x] Test the Docker container locally before deployment
 - [ ] Verify API endpoints with Postman or similar tool
 - [ ] Load test critical endpoints if expecting high traffic
 
 ## Documentation
 
-- [ ] Update API documentation if needed
+- [x] Update API documentation if needed
 - [ ] Document deployment process
 - [ ] Document rollback procedures
 - [ ] Update README with production usage instructions

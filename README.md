@@ -85,6 +85,7 @@ The API will be available at <http://localhost:5209>.
 ### Automated Tests
 
 Run the full test suite with the Testing configuration:
+(Run the command from the root directory.)
 
 ```powershell
 dotnet test -c Testing

@@ -1,5 +1,19 @@
 # Publishing Process Checklist
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Local Environment Setup](#local-environment-setup)
+- [Local Testing](#local-testing)
+- [Azure Setup](#azure-setup)
+- [Container Registry Setup](#container-registry-setup)
+- [GitHub Configuration](#github-configuration)
+- [Application Configuration](#application-configuration)
+- [Deployment Verification](#deployment-verification)
+- [Post-Deployment](#post-deployment)
+- [Rollback Plan](#rollback-plan)
+- [Final Checks](#final-checks)
+
 This checklist guides you through the actual process of publishing your ASP.NET Core application to Azure. Complete the
 [Pre-Publishing Checklist](PREPUBLISHING_CHECKLIST.md) before starting this process.
 

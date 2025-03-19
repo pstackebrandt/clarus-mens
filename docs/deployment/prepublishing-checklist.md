@@ -89,7 +89,8 @@ Based on the current state of your application, here are specific actions to tak
    - [x] This is already implemented correctly in your Program.cs
 
 3. **Consider adding Application Insights**:
-   Add the Application Insights NuGet package and configure it in Program.cs
+   - [x] Add the Application Insights NuGet package
+      - [ ] Configure it in Program.cs
    - [ ] connection string to be set
 
 4. **Review OpenAPI/Swagger Configuration**:
@@ -108,7 +109,7 @@ Based on the current state of your application, here are specific actions to tak
 
 - [x] Run all unit and integration tests
 - [x] Test the Docker container locally before deployment
-- [ ] Verify API endpoints with Postman or similar tool
+- [x] Verify API endpoints with Postman or similar tool
 - [ ] Load test critical endpoints if expecting high traffic
 
 ## Documentation

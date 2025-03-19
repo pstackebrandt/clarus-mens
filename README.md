@@ -1,6 +1,6 @@
 # ClarusMens
 
-A clear mind, a clear path forward.
+A .NET API Template Project - Learning by Building
 
 ## Table of Contents
 
@@ -23,12 +23,21 @@ A clear mind, a clear path forward.
 
 ## About
 
-ClarusMens is a .NET-based API project  that generates structured answers (MVP),
- learning questions with answers, and quizzes based on user input.
+ClarusMens is primarily a training project that demonstrates how to build and deploy a production-ready .NET API.
+While it includes a simple question-answering endpoint, its main value lies in showcasing:
+
+- Modern .NET API architecture and best practices
+- Complete CI/CD and deployment setup
+- Comprehensive testing infrastructure
+- Production-ready Docker configuration
+- Structured documentation approach
+
+The question-answering functionality serves as a simple example endpoint, allowing focus on the
+infrastructure and deployment aspects of API development.
 
 ## Using as a Template
 
-This project is designed to serve as a template for future .NET API projects. It includes:
+This project is designed as a learning resource and template for future .NET API projects. It includes:
 
 - Production-ready architecture following modern .NET API best practices
 - Comprehensive test infrastructure with unit, integration, and functional tests

@@ -1,4 +1,10 @@
-# Documentation Overview
+# ClarusMens Documentation
+
+> **Project Purpose**: ClarusMens is a training project that demonstrates building and deploying a
+> production-ready .NET API. While it includes basic API functionality, its main value is in showcasing
+> infrastructure, testing, and deployment practices.
+
+## Documentation Overview
 
 This folder contains documentation for the Clarus Mens project. Below is an overview of the documentation structure.
 

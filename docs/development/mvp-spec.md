@@ -1,6 +1,19 @@
-# ClarusMensAPI MVP Scope
+# MVP Specification
 
-## Goal
+> **Project Focus**: ClarusMens MVP demonstrates building a production-ready .NET API infrastructure.
+> The API functionality is intentionally simple to allow focus on deployment, testing, and best practices.
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [ClarusMensAPI MVP Scope](#clarusmensapi-mvp-scope)
+  - [Goal](#goal)
+- [Core Features](#core-features)
+- [Deployment](#deployment)
+
+## ClarusMensAPI MVP Scope
+
+### Goal
 
 ClarusMensAPI is an ASP.NET Minimal API designed to process user questions and generate structured answers using AI.
 
@@ -28,4 +41,5 @@ ClarusMensAPI is an ASP.NET Minimal API designed to process user questions and g
 - Host the API on **Railway** for automated deployments.  
 - Use **GitHub** for version control and collaboration.
 
-This MVP focuses on ensuring the API reliably processes valid questions and returns meaningful AI-generated responses while maintaining security and usability.
+This MVP focuses on ensuring the API reliably processes valid questions and returns meaningful AI-generated responses
+while maintaining security and usability.

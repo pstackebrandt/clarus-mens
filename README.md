@@ -123,7 +123,7 @@ For more detailed testing options, CI/CD integration details, and environment va
 This project includes `.http` files for testing API endpoints with the REST Client VS Code extension.
 
 1. Install the REST Client extension in VS Code/Cursor
-2. Open `ClarusMensAPI/ClarusMensAPI.http`
+2. Open `ClarusMensAPI/api-manual-endpoint-requests.http`
 3. Click "Send Request" above any request definition
 4. View the response in the split window
 

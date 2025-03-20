@@ -22,7 +22,7 @@ This folder contains documentation for the Clarus Mens project. Below is an over
   - [Markdown Guidelines](tools/markdown-guidelines.md): Guidelines for creating markdown documents
   - [MDC Guidelines](tools/mdc-guidelines.md): Guidelines for creating MDC files for Cursor AI
   - [PowerShell Execution Policy](tools/powershell-execution-policy.md): Guide for PowerShell execution policies
-  - [Documentation Standards](tools/documentation-standards.md): Standards for writing documentation
+  - [Documentation Guide](tools/documentation-guide.md): Standards for writing documentation
   - [Template Usage](tools/template-usage.md): How to use documentation templates
 - **shell/**: Documentation about shell usage and scripting
   - [Shell Usage Guidelines](shell/shell-usage-guidelines.md): Guidelines for choosing between PowerShell and Git Bash

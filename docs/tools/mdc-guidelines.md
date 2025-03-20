@@ -7,8 +7,13 @@
 - [Core Purpose](#core-purpose)
 - [Basic Structure](#basic-structure)
 - [Rule Types](#rule-types)
+- [How Rules Work](#how-rules-work)
+  - [Stage 1: Injection](#stage-1-injection)
+  - [Stage 2: Activation](#stage-2-activation)
+  - [Rule Types and Properties](#rule-types-and-properties)
 - [Best Practices](#best-practices)
 - [When to Create MDC Files](#when-to-create-mdc-files)
+- [References](#references)
 
 ## What are MDC Files?
 
@@ -39,10 +44,46 @@ Content organized in sections...
 
 ## Rule Types
 
+Cursor supports four rule types, each with a different activation behavior:
+
 - **Manual**: Only applied when explicitly requested
 - **Always**: Applied across all matching files automatically
 - **Auto Attached**: Automatically attaches to relevant files based on content
 - **Agent Requested**: Applied when the AI determines they're relevant
+
+## How Rules Work
+
+Rules in Cursor operate through a two-stage process:
+
+### Stage 1: Injection
+
+Rules are injected into the system prompt but aren't yet active. Injection depends on:
+
+- **`alwaysApply`**: Controls unconditional injection into context
+  - `true` - Always injected into every prompt
+  - `false` - Only injected when relevant by other criteria
+
+- **`globs`**: File pattern matching for context-based injection
+  - Matches files based on patterns (filenames, extensions)
+  - If a file matches, the rule is injected into context
+
+### Stage 2: Activation
+
+Whether an injected rule takes effect depends on:
+
+- **`description`**: Determines the scenarios where the rule should be activated
+  - The AI uses this to decide if the rule is relevant to the current task
+
+### Rule Types and Properties
+
+Here's how the frontmatter properties relate to rule types:
+
+| Rule Type       | alwaysApply | Notes                                          |
+| --------------- | ----------- | ---------------------------------------------- |
+| Manual          | `false`     | Requires explicit request to activate          |
+| Always          | `true`      | Automatically applied to all matching files    |
+| Auto Attached   | `false`     | System decides based on file content relevance |
+| Agent Requested | `false`     | AI decides based on context relevance          |
 
 ## Best Practices
 
@@ -61,3 +102,8 @@ Content organized in sections...
 - To document architectural decisions
 - For special handling of framework-specific code
 - To ensure consistency across your codebase
+
+## References
+
+- [A Deep Dive into Cursor Rules](https://forum.cursor.com/t/a-deep-dive-into-cursor-rules-0-45/60721) - Comprehensive
+explanation of how Cursor rules work

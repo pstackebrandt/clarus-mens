@@ -13,12 +13,10 @@ WORKDIR /src
 # Copy csproj and restore dependencies
 COPY *.sln .
 COPY ClarusMensAPI/*.csproj ./ClarusMensAPI/
-
-# Copy all files immediately - simpler approach
-COPY . .
-
-# Restore only the main project by default
 RUN dotnet restore ClarusMensAPI/ClarusMensAPI.csproj
+
+# Copy all files after restore to leverage build layer caching
+COPY . .
 
 # Build the app
 WORKDIR /src/ClarusMensAPI
@@ -50,16 +48,19 @@ ENV ASPNETCORE_ENVIRONMENT=Production
 # Create non-root user for security
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 
-# Install curl for health checks
+# Install curl and create health check script
 USER root
-RUN apt-get update --allow-releaseinfo-change || apt-get update && \
+RUN apt-get update && \
     apt-get install -y curl --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    echo '#!/bin/sh\ncurl -f http://localhost:80/health || exit 1' > /usr/local/bin/healthcheck.sh && \
+    chmod +x /usr/local/bin/healthcheck.sh
+
 USER appuser
 
-# Configure container health check
+# Configure container health check (using exec form)
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
-    CMD curl -f http://localhost:80/health || exit 1
+    CMD ["/usr/local/bin/healthcheck.sh"]
 
 EXPOSE 80
 ENTRYPOINT ["dotnet", "ClarusMensAPI.dll"] 

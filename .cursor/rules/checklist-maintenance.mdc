@@ -1,0 +1,58 @@
+---
+description: Rules for maintaining project checklists
+globs: "**/*checklist.md"
+alwaysApply: true
+---
+
+# Checklist Maintenance Rules
+
+## Status Indicators
+
+- ✅ Completed: Task is fully implemented and verified
+- - [ ] Todo: Task not yet started or completed
+- 🔄 In-progress: Work has started but not completed
+- ⚠️ Blocked: Waiting on external dependency
+
+## Organization
+
+- Group by functional area (Docker, Security, etc.)
+- List completed items first within each section
+- Place priority items immediately after completed items
+- Use logical workflow order for sections
+
+## Formatting
+
+- Use h1 (`#`) for document title
+- Use h2 (`##`) for main sections
+- Use h3 (`###`) for subsections
+- Use bullet lists for checklist items
+- Use 2-space indentation for nested items
+- Keep line length under 120 characters
+- Use code blocks with language identifiers
+
+## Example
+
+```markdown
+## Security
+
+✅ HTTPS redirection configured  
+✅ Sensitive files excluded from source control  
+
+- [ ] Add rate limiting for API endpoints  
+- [ ] Implement CORS policy configuration  
+```
+
+## Update Process
+
+1. Review project status to identify completed items
+2. Update status indicators accordingly
+3. Add new requirements that have emerged
+4. Remove duplicate or obsolete items
+5. Ensure cross-references remain valid 
+
+## Rule Types
+
+- **Manual** (`alwaysApply: false`): Only applied when explicitly requested
+- **Always** (`alwaysApply: true`): Applied across all matching files automatically
+- **Auto Attached**: Automatically attaches to relevant files based on content (Cursor feature)
+- **Agent Requested**: Applied when the AI determines they're relevant (Cursor feature) 

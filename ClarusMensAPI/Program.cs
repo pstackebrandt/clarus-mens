@@ -13,11 +13,15 @@
 using ClarusMensAPI.Services;
 using ClarusMensAPI.Extensions;
 using ClarusMensAPI.Endpoints;
+using ClarusMensAPI.Configuration;
 
 // API contract version constant
 const string ApiContractVersion = "v0";
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure application configuration sources
+ApiConfiguration.ConfigureAppConfiguration(builder);
 
 // Service Registration
 builder.Services.AddApplicationServices();
@@ -27,6 +31,9 @@ builder.Services.AddHealthChecks();
 builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
+
+// Validate configuration
+ApiConfiguration.ValidateConfiguration(app.Configuration, app.Environment);
 
 // Application Lifecycle Events
 app.Lifetime.ApplicationStarted.Register(() =>

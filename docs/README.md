@@ -12,6 +12,7 @@ This folder contains documentation for the Clarus Mens project. Below is an over
 
 - **getting-started/**: Onboarding and initial setup documentation
   - [Troubleshooting](getting-started/troubleshooting.md): Common issues and solutions
+  - [Azure Training Guide](getting-started/azure-training-guide.md): Recommended Microsoft training for Azure deployment
 - **development/**: Development guidelines and specifications
   - [Project Structure](development/project-structure.md): Details of the project's folder structure
   - [MVP Specification](development/mvp-spec.md): Minimum Viable Product specification
@@ -31,7 +32,7 @@ This folder contains documentation for the Clarus Mens project. Below is an over
 - **deployment/**: Deployment and publishing documentation
   - [Publishing Checklist](deployment/publishing-checklist.md): Checklist for publishing the application
   - [Pre-publishing Checklist](deployment/prepublishing-checklist.md): Preparations before publishing
-  - [Docker Azure Deployment](deployment/docker-azure-deployment.md): Deploying with Docker to Azure
+  - [Azure Deployment Guide](deployment/azure-deployment-guide.md): Deploying with Docker to Azure
   - [Application Insights](deployment/application-insights.md): Setting up and using Application Insights
   - [ASP.NET Hosting Options](deployment/asp-net-hosting-options.md): Hosting options for ASP.NET applications
 

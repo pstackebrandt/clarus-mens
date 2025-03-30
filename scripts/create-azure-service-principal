@@ -4,18 +4,42 @@
 # specified Azure Container Registry.
 # copied from https://learn.microsoft.com/en-us/azure/container-registry/container-registry-auth-aci
 
-# Modify for your environment. The ACR_NAME is the name of your Azure Container
-# Registry, and the SERVICE_PRINCIPAL_ID is the service principal's 'appId' or
-# one of its 'servicePrincipalNames' values.
-ACR_NAME=$containerRegistry
-SERVICE_PRINCIPAL_ID=$servicePrincipal
+# Display usage if no parameters are provided
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <container-registry-name> <service-principal-id>"
+    echo "Example: $0 acihellocontreg 12345678-90ab-cdef-1234-567890abcdef"
+    exit 1
+fi
 
+# Get parameters
+ACR_NAME=$1
+SERVICE_PRINCIPAL_ID=$2
+
+# Verify Azure CLI is logged in
+if ! az account show >/dev/null 2>&1; then
+    echo "Error: Not logged into Azure. Please run 'az login' first."
+    exit 1
+fi
+
+echo "Getting ACR registry ID..."
 # Populate value required for subsequent command args
 ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query id --output tsv)
 
-# Assign the desired role to the service principal. Modify the '--role' argument
-# value as desired:
-# acrpull:     pull only
-# acrpush:     push and pull
-# owner:       push, pull, and assign roles
-az role assignment create --assignee $SERVICE_PRINCIPAL_ID --scope $ACR_REGISTRY_ID --role acrpull
+if [ -z "$ACR_REGISTRY_ID" ]; then
+    echo "Error: Could not find Container Registry '$ACR_NAME'"
+    exit 1
+fi
+
+echo "Assigning acrpull role to service principal..."
+# Assign the acrpull role to the service principal
+az role assignment create \
+    --assignee $SERVICE_PRINCIPAL_ID \
+    --scope $ACR_REGISTRY_ID \
+    --role acrpull
+
+if [ $? -eq 0 ]; then
+    echo "Successfully assigned acrpull role to service principal"
+else
+    echo "Error: Failed to assign role. Please check if the service principal ID is correct and you have sufficient permissions."
+    exit 1
+fi

@@ -3,7 +3,7 @@ BeforeAll {
     $ProjectRoot = (Split-Path -Parent (Split-Path -Parent $PSScriptRoot))
     
     # Import the script to test
-    $ScriptPath = Join-Path $ProjectRoot "Update-Version.ps1"
+    $ScriptPath = Join-Path $ProjectRoot "scripts/Update-Version.ps1"
     . $ScriptPath  # Dot-source the script to import its functions
     
     # Create a temporary directory for test files

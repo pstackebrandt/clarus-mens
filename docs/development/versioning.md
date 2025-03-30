@@ -12,7 +12,8 @@ We follow [Semantic Versioning 2.0.0](https://semver.org/) (`MAJOR.MINOR.PATCH`)
 
 ## Current Setup
 
-Version information is centralized in the `Directory.Build.props` file in the solution root. This approach ensures that all projects in the solution share the same version number.
+Version information is centralized in the `Directory.Build.props` file in the solution root.
+This approach ensures that all projects in the solution share the same version number.
 
 ### Version Properties
 
@@ -57,14 +58,14 @@ The `Update-Version.ps1` script maintains consistency across all these propertie
 To update the version number, run the `Update-Version.ps1` script from the solution root:
 
 ```powershell
-# Bump patch version (e.g., 0.5.0 → 0.5.1)
-.\Update-Version.ps1 -VersionType patch
+# Increment patch version (1.2.3 → 1.2.4)
+.\scripts\Update-Version.ps1 -VersionType patch
 
-# Bump minor version (e.g., 0.5.0 → 0.6.0)
-.\Update-Version.ps1 -VersionType minor
+# Increment minor version (1.2.3 → 1.3.0)
+.\scripts\Update-Version.ps1 -VersionType minor
 
-# Bump major version (e.g., 0.5.0 → 1.0.0)
-.\Update-Version.ps1 -VersionType major
+# Increment major version (1.2.3 → 2.0.0)
+.\scripts\Update-Version.ps1 -VersionType major
 ```
 
 ### Using VS Code Tasks
@@ -89,10 +90,15 @@ For convenience, VS Code tasks have been configured to run the script:
 1. Determine the appropriate version increment (major, minor, patch)
 2. Run the version update script
 3. Commit the updated `Directory.Build.props` file
-4. Create a tag for the release with a descriptive message: `git tag -a v{VERSION} -m "Version {VERSION}: [Brief description of changes]"`
+4. Create a tag for the release with a descriptive message:
+
+   ```bash
+   git tag -a v{VERSION} -m "Version {VERSION}: [Brief description]"
+   ```
+
    - Include a short summary of key changes, new features, or bug fixes
-   - Example: `git tag -a v0.5.1 -m "Version 0.5.1: Fixed API response formatting and improved error handling"`
-     - Including the version number in both the tag and message ensures consistency and makes it easier to identify the version when viewing git logs or browsing repository interfaces
+   - Example: `git tag -a v0.5.1 -m "Version 0.5.1: Fixed API formatting"`
+   - Including version in tag and message ensures consistency
 5. Push the changes and tags: `git push && git push --tags`
 
 ## Viewing Version Information
@@ -123,14 +129,16 @@ GET /api/version
 }
 ```
 
-Note: In .NET, the `System.Version` class uses four components (Major.Minor.Build.Revision), where the SemVer "patch" component maps to .NET's "build" component.
+Note: In .NET, the `System.Version` class uses four components (Major.Minor.Build.Revision).
+The SemVer "patch" component maps to .NET's "build" component.
 
 ### Display Versions and Pre-release Identifiers
 
 The `VersionService` provides methods to generate different version formats:
 
 - `GetVersionString()` - Returns the three-part version number (e.g., "0.5.0")
-- `GetDisplayVersion(suffix)` - Returns a display-friendly version with optional suffix and environment name (e.g., "0.5.0-beta (Development)")
+- `GetDisplayVersion(suffix)` - Returns a display-friendly version with suffix and environment
+  (e.g., "0.5.0-beta (Development)")
 
 ## Adding Version Display to Your Application
 
@@ -148,13 +156,16 @@ The version defined in `Directory.Build.props` is used during build time to set:
 - `AssemblyVersion` (e.g., "0.5.0.0") - Used by .NET for assembly identity
 - `FileVersion` (e.g., "0.5.0.0") - Used by Windows for file properties
 
-The `Update-Version.ps1` script sets AssemblyVersion and FileVersion to "$newVersion.0", adding a fourth component (revision) set to 0.
+The `Update-Version.ps1` script sets `AssemblyVersion` and `FileVersion` to "$newVersion.0",
+adding a fourth component (revision) set to 0.
 
-At runtime, the application accesses this information through `Assembly.GetName().Version` or via the custom `VersionService`.
+At runtime, the application accesses version info through `Assembly.GetName().Version`
+or via the custom `VersionService`.
 
 ## Fixing Versioning with SemVer in .NET
 
-Yes, Semantic Versioning (SemVer) is very useful for your .NET project and I recommend implementing it more consistently. SemVer provides clear communication about compatibility and is widely used in the .NET ecosystem, especially for NuGet packages.
+SemVer is very useful for your .NET project and I recommend implementing it more consistently.
+It provides clear communication about compatibility and is widely used in the .NET ecosystem.
 
 ## Current Issues
 
@@ -240,8 +251,8 @@ Add proper support for pre-release versions:
 
 ```powershell
 # Examples:
-.\Update-Version.ps1 -VersionType minor -PreRelease "beta1"  # 0.5.0 → 0.6.0-beta1
-.\Update-Version.ps1 -VersionType patch                      # 0.6.0-beta1 → 0.6.0
+.\scripts\Update-Version.ps1 -VersionType minor -PreRelease "beta1"  # 0.5.0 → 0.6.0-beta1
+.\scripts\Update-Version.ps1 -VersionType patch                      # 0.6.0-beta1 → 0.6.0
 ```
 
 ## Benefits of Consistent SemVer in .NET
@@ -250,12 +261,3 @@ Add proper support for pre-release versions:
 2. **Dependency Management**: Clearer compatibility expectations
 3. **Release Management**: Easier to automate and understand release processes
 4. **Industry Standards**: Following best practices used across .NET ecosystem
-
-## Implementation Plan
-
-1. Update `Directory.Build.props` to use the recommended version properties
-2. Enhance `Update-Version.ps1` to support pre-release identifiers
-3. Modify `VersionService` to better align with SemVer
-4. Update documentation to clearly explain the SemVer approach
-
-Would you like me to create specific code examples for any of these components to implement a more consistent SemVer approach?

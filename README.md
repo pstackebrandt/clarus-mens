@@ -1,14 +1,43 @@
 # ClarusMens
 
-A clear mind, a clear path forward.
+A .NET API Template Project - Learning by Building
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [About](#about)
+- [Using as a Template](#using-as-a-template)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Testing the API](#testing-the-api)
+  - [Automated Tests](#automated-tests)
+  - [Docker-based Testing](#docker-based-testing)
+  - [Using REST Client](#using-rest-client)
+  - [Using Browser or Postman](#using-browser-or-postman)
+- [Project Structure](#project-structure)
+- [Development](#development)
+  - [Using Hot Reload](#using-hot-reload)
+- [Documentation](#documentation)
+- [Versioning](#versioning)
+- [License](#license)
 
 ## About
 
-ClarusMens is a .NET-based API project  that generates structured answers (MVP), learning questions with answers, and quizzes based on user input.
+ClarusMens is primarily a training project that demonstrates how to build and deploy a production-ready .NET API.
+While it includes a simple question-answering endpoint, its main value lies in showcasing:
+
+- Modern .NET API architecture and best practices
+- Complete CI/CD and deployment setup
+- Comprehensive testing infrastructure
+- Production-ready Docker configuration
+- Structured documentation approach
+
+The question-answering functionality serves as a simple example endpoint, allowing focus on the
+infrastructure and deployment aspects of API development.
 
 ## Using as a Template
 
-This project is designed to serve as a template for future .NET API projects. It includes:
+This project is designed as a learning resource and template for future .NET API projects. It includes:
 
 - Production-ready architecture following modern .NET API best practices
 - Comprehensive test infrastructure with unit, integration, and functional tests
@@ -65,12 +94,14 @@ The API will be available at <http://localhost:5209>.
 ### Automated Tests
 
 Run the full test suite with the Testing configuration:
+(Run the command from the root directory.)
 
 ```powershell
 dotnet test -c Testing
 ```
 
-The `Testing` configuration is a specialized build configuration optimized for test execution, with separate output directories and test-specific settings.
+The `Testing` configuration is a specialized build configuration optimized for test execution,
+ with separate output directories and test-specific settings.
 
 > **Note**: You may see a warning about no tests in the IntegrationTests project - this is expected and can be ignored.
 
@@ -81,6 +112,19 @@ $env:CLARUSMENS_TEST_TIMEOUT = 60000  # Set longer timeout (in ms)
 dotnet test -c Testing
 ```
 
+### Docker-based Testing
+
+Tests can be included in the Docker image if needed:
+
+```powershell
+docker build -t clarusmens-api-test --target=test .
+docker run -it clarusmens-api-test
+```
+
+For standard testing, use the non-containerized approach detailed above.
+
+For detailed Docker build and testing documentation, see [Docker Build Documentation](docs/deployment/docker-build-documentation.md).
+
 For more detailed testing options, CI/CD integration details, and environment variables, see the [tests README](./tests/README.md).
 
 ### Using REST Client
@@ -88,7 +132,7 @@ For more detailed testing options, CI/CD integration details, and environment va
 This project includes `.http` files for testing API endpoints with the REST Client VS Code extension.
 
 1. Install the REST Client extension in VS Code/Cursor
-2. Open `ClarusMensAPI/ClarusMensAPI.http`
+2. Open `ClarusMensAPI/api-manual-endpoint-requests.http`
 3. Click "Send Request" above any request definition
 4. View the response in the split window
 

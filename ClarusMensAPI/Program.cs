@@ -1,19 +1,39 @@
+/*
+ * Program.cs
+ * 
+ * Entry point and configuration for the Clarus Mens API.
+ * This file:
+ * - Initializes the web application
+ * - Configures services, middleware, and endpoints
+ * - Sets up OpenAPI/Swagger documentation
+ * - Defines application lifecycle events
+ * - Contains a non-static Program class to support WebApplicationFactory testing
+ */
+
 using ClarusMensAPI.Services;
 using ClarusMensAPI.Extensions;
 using ClarusMensAPI.Endpoints;
+using ClarusMensAPI.Configuration;
 
 // API contract version constant
 const string ApiContractVersion = "v0";
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure application configuration sources
+ApiConfiguration.ConfigureAppConfiguration(builder);
+
 // Service Registration
 builder.Services.AddApplicationServices();
 builder.Services.AddOpenApiServices(ApiContractVersion);
 builder.Services.AddHttpsRedirection(7043);
 builder.Services.AddHealthChecks();
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
+
+// Validate configuration
+ApiConfiguration.ValidateConfiguration(app.Configuration, app.Environment);
 
 // Application Lifecycle Events
 app.Lifetime.ApplicationStarted.Register(() =>
@@ -29,7 +49,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 // OpenAPI/Swagger Configuration
-// I make OpenAPI available regardless of environment.
+// Swagger will be active in production so interviewers will be able to test the API.
 app.MapOpenApi(); // Makes JSON spec available at /openapi
 app.UseSwagger();
 app.UseSwaggerUI(options =>

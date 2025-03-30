@@ -1,4 +1,23 @@
-# API Architecture
+# Architecture Overview
+
+> **Training Project**: This architecture demonstrates best practices for .NET API development.
+> While the API functionality is basic, the infrastructure and patterns shown here are
+> production-ready and can be used as a template for more complex APIs.
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [API Architecture](#api-architecture)
+- [Overview](#overview)
+- [API Structure](#api-structure)
+  - [Service Registration](#service-registration)
+  - [Application Lifecycle Events](#application-lifecycle-events)
+  - [Middleware Configuration](#middleware-configuration)
+  - [Endpoint Registration](#endpoint-registration)
+- [API Contract Versioning](#api-contract-versioning)
+- [Testability](#testability)
+
+## API Architecture
 
 This document describes the recommended API setup pattern for .NET 9 minimal APIs in the Clarus Mens project.
 For detailed information about the project's folder structure, please refer to [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md).

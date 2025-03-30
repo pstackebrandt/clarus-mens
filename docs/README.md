@@ -1,19 +1,40 @@
 # ClarusMens Documentation
 
-This directory contains documentation for the ClarusMens project.
+> **Project Purpose**: ClarusMens is a training project that demonstrates building and deploying a
+> production-ready .NET API. While it includes basic API functionality, its main value is in showcasing
+> infrastructure, testing, and deployment practices.
 
-## Documentation Structure
+## Documentation Overview
 
-- [API Testing Guide](TESTING-GUIDE.md) - How to test the API using REST Client
+This folder contains documentation for the Clarus Mens project. Below is an overview of the documentation structure.
 
-## Adding Documentation
+## Folder Structure
 
-When adding new documentation:
-
-1. Use markdown files (`.md`) for all textual documentation
-2. Place files in the appropriate subdirectory
-3. Link to new documentation from this README
-4. Follow consistent formatting (see existing files for reference)
+- **getting-started/**: Onboarding and initial setup documentation
+  - [Troubleshooting](getting-started/troubleshooting.md): Common issues and solutions
+  - [Azure Training Guide](getting-started/azure-training-guide.md): Recommended Microsoft training for Azure deployment
+- **development/**: Development guidelines and specifications
+  - [Project Structure](development/project-structure.md): Details of the project's folder structure
+  - [MVP Specification](development/mvp-spec.md): Minimum Viable Product specification
+  - [Versioning](development/versioning.md): Version management approach for the project
+  - [Architecture](development/architecture.md): System architecture and design principles
+  - [Testing Guide](development/testing-guide.md): Guidelines for testing the application
+- **tools/**: Documentation about tools used in the project
+  - [Markdown Guidelines](tools/markdown-guidelines.md): Guidelines for creating markdown documents
+  - [MDC Guidelines](tools/mdc-guidelines.md): Guidelines for creating MDC files for Cursor AI
+  - [PowerShell Execution Policy](tools/powershell-execution-policy.md): Guide for PowerShell execution policies
+  - [Documentation Guide](tools/documentation-guide.md): Standards for writing documentation
+  - [Template Usage](tools/template-usage.md): How to use documentation templates
+- **shell/**: Documentation about shell usage and scripting
+  - [Shell Usage Guidelines](shell/shell-usage-guidelines.md): Guidelines for choosing between PowerShell and Git Bash
+- **configuration/**: Configuration-related documentation
+  - [Configuration](configuration/configuration.md): Configuration options for the application
+- **deployment/**: Deployment and publishing documentation
+  - [Publishing Checklist](deployment/publishing-checklist.md): Checklist for publishing the application
+  - [Pre-publishing Checklist](deployment/prepublishing-checklist.md): Preparations before publishing
+  - [Azure Deployment Guide](deployment/azure-deployment-guide.md): Deploying with Docker to Azure
+  - [Application Insights](deployment/application-insights.md): Setting up and using Application Insights
+  - [ASP.NET Hosting Options](deployment/asp-net-hosting-options.md): Hosting options for ASP.NET applications
 
 ## Style Guide
 

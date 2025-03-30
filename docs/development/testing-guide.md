@@ -12,7 +12,7 @@
 
 The project includes `.http` files for testing API endpoints:
 
-- `ClarusMensAPI/ClarusMensAPI.http` - Basic API endpoints
+- `ClarusMensAPI/api-manual-endpoint-requests.http` - Basic API endpoints
 
 ### Running Requests
 

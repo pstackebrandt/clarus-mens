@@ -26,6 +26,8 @@ logs/
 .env
 *.env
 secrets.json
+!.env.example
+!*.env.template
 
 # Dependency-Cache (NuGet)
 packages/
@@ -39,8 +41,6 @@ libman.json
 
 # Docker
 docker-compose.override.yml
-**/Dockerfile
-**/.dockerignore
 
 # Rider / JetBrains IDE
 .idea/

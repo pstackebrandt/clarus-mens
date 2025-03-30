@@ -1,0 +1,34 @@
+---
+description: Guidelines for creating and using Git Bash scripts
+globs: 
+alwaysApply: false
+---
+---
+description: Guidelines for creating and using Git Bash scripts
+globs: "*.sh"
+alwaysApply: false
+---
+
+# Selected Git Bash Scripting Guidelines
+
+## File Format
+- Use LF line endings (not CRLF)
+- Use UTF-8 without BOM
+- Start with shebang: `#!/bin/bash`
+
+## Path Handling
+- Use forward slashes in paths: `/path/to/dir`
+- Always quote paths with spaces
+- Use relative paths when possible
+
+## Error Handling
+- Use `set -e` for immediate exit on error
+- Check exit codes: `if [ $? -ne 0 ]; then ... fi`
+- Log errors to stderr: `echo "Error: message" >&2`
+
+## PowerShell Integration
+- Use `Invoke-GitBash` helper
+- Example:
+  ```powershell
+  Invoke-GitBash "./scripts/your-script.sh"
+  ```

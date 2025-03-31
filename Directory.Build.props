@@ -5,12 +5,12 @@
     <!-- Add Testing to available configurations -->
     <Configurations>Debug;Release;Testing</Configurations>
     <!-- Package version using SemVer (can include pre-release tags like -beta) -->
-    <Version>0.8.0</Version>
+    <Version>0.9.0</Version>
     <!-- .NET requires 4-part versioning for assembly -->
-    <AssemblyVersion>0.8.0.0</AssemblyVersion>
-    <FileVersion>0.8.0.0</FileVersion>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
+    <FileVersion>0.9.0.0</FileVersion>
     <!-- Optional: Explicit pre-release label for NuGet -->
-    <VersionPrefix>0.8.0</VersionPrefix>
+    <VersionPrefix>0.9.0</VersionPrefix>
     <VersionSuffix>
     </VersionSuffix>
     <!-- Additional metadata -->

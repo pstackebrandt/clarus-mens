@@ -14,6 +14,7 @@ using ClarusMensAPI.Services;
 using ClarusMensAPI.Extensions;
 using ClarusMensAPI.Endpoints;
 using ClarusMensAPI.Configuration;
+using System.Runtime.InteropServices;
 
 // API contract version constant
 const string ApiContractVersion = "v0";
@@ -26,7 +27,11 @@ ApiConfiguration.ConfigureAppConfiguration(builder);
 // Service Registration
 builder.Services.AddApplicationServices();
 builder.Services.AddOpenApiServices(ApiContractVersion);
-builder.Services.AddHttpsRedirection(7043);
+// Only configure HTTPS redirection in Development
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddHttpsRedirection(7043);
+}
 builder.Services.AddHealthChecks();
 builder.Services.AddApplicationInsightsTelemetry();
 
@@ -39,11 +44,20 @@ ApiConfiguration.ValidateConfiguration(app.Configuration, app.Environment);
 app.Lifetime.ApplicationStarted.Register(() =>
 {
     var versionService = app.Services.GetRequiredService<VersionService>();
-    app.Logger.LogInformation("Application started. Version: {Version}", versionService.GetDisplayVersion());
+    app.Logger.LogInformation("Application started successfully. Version: {Version}", versionService.GetDisplayVersion());
+    app.Logger.LogInformation("Environment: {Environment}", app.Environment.EnvironmentName);
+    app.Logger.LogInformation("ASPNETCORE_URLS: {Urls}", Environment.GetEnvironmentVariable("ASPNETCORE_URLS"));
+    app.Logger.LogInformation("Operating System: {OS}", Environment.OSVersion);
+    app.Logger.LogInformation("Framework: {Framework}", RuntimeInformation.FrameworkDescription);
+});
+
+app.Lifetime.ApplicationStopping.Register(() =>
+{
+    app.Logger.LogWarning("Application is stopping!");
 });
 
 // Middleware Configuration
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
@@ -56,6 +70,22 @@ app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint($"/swagger/{ApiContractVersion}/swagger.json", $"Clarus Mens API {app.Services.GetRequiredService<VersionService>().GetDisplayVersion()}");
     options.RoutePrefix = "swagger";
+});
+
+// Add diagnostic endpoint
+app.MapGet("/api/diagnostics", () =>
+{
+    return new
+    {
+        Environment = app.Environment.EnvironmentName,
+        Time = DateTime.UtcNow,
+        OsVersion = Environment.OSVersion.ToString(),
+        ProcessorCount = Environment.ProcessorCount,
+        FrameworkDescription = RuntimeInformation.FrameworkDescription,
+        AspNetCoreUrls = Environment.GetEnvironmentVariable("ASPNETCORE_URLS"),
+        WorkingDirectory = Environment.CurrentDirectory,
+        AvailableMemoryMB = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024 / 1024
+    };
 });
 
 // Endpoint Registration

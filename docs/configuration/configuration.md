@@ -4,7 +4,8 @@ This document explains how configuration is managed in the Clarus Mens API proje
 
 ## Shared Settings Approach
 
-The application uses a configuration inheritance model where common settings are defined in a base file and environment-specific settings override only what needs to be different.
+The application uses a configuration inheritance model where common settings are defined in a base file \
+and environment-specific settings override only what needs to be different.
 
 ### Files Structure
 
@@ -58,7 +59,8 @@ The application uses a configuration inheritance model where common settings are
 }
 ```
 
-In the Development environment, the API name and description come from the Development file, while contact and license information are inherited from the base file.
+In the Development environment, the API name and description come from the Development file, \
+while contact and license information are inherited from the base file.
 
 ### Benefits
 

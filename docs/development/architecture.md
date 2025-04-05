@@ -20,7 +20,8 @@
 ## API Architecture
 
 This document describes the recommended API setup pattern for .NET 9 minimal APIs in the Clarus Mens project.
-For detailed information about the project's folder structure, please refer to [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md).
+For detailed information about the project's folder structure, please refer to \
+[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md).
 
 ## Overview
 
@@ -52,7 +53,8 @@ This pattern should be preserved for logging and startup tasks:
 
 Maintain this order while customizing for your needs:
 
-- HTTPS redirection is only applied in non-development environments to prevent certificate issues during local development
+- HTTPS redirection is only applied in non-development environments to prevent certificate issues during \
+local development
 - OpenAPI is always available regardless of environment
 - Swagger UI is configured with appropriate versioning
 

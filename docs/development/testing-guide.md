@@ -13,6 +13,19 @@
 The project includes `.http` files for testing API endpoints:
 
 - `ClarusMensAPI/api-manual-endpoint-requests.http` - Basic API endpoints
+  - **Environment Support**: This file includes variables for multiple environments:
+    - `@local` - For testing the API running locally (port 5209)
+    - `@docker` - For testing the API in a Docker container (port 5000)
+    - `@azure` - For testing the deployed API in Azure
+  - To switch environments, simply change the active host address variable:
+
+    ```http
+    // Change this line to select your target environment
+    @ClarusMensAPI_HostAddress = {{local}}
+    // Other options:
+    // @ClarusMensAPI_HostAddress = {{docker}}
+    // @ClarusMensAPI_HostAddress = {{azure}}
+    ```
 
 ### Running Requests
 

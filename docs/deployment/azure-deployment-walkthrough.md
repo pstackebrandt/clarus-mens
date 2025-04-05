@@ -3,10 +3,14 @@
 > **Note**: This document describes the actual implementation and deployment process we
 > followed with our specific challenges and solutions. For theoretical background and
 > planning information, see [Azure Deployment Planning Guide](azure-deployment-planning-guide.md).
+>
+> **Automation**: For our current automated deployment approach using PowerShell scripts, see
+> [Azure Deployment Workflow](azure-deployment-workflow.md).
 
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
+- [Version Numbering Evolution](#version-numbering-evolution)
 - [Overview](#overview)
 - [Project Structure](#project-structure)
 - [Deployment Strategy](#deployment-strategy)
@@ -35,6 +39,37 @@
   - [Monitoring](#monitoring)
 - [Cost Considerations](#cost-considerations)
 - [Lessons Learned](#lessons-learned)
+
+## Version Numbering Evolution
+
+This document uses simplified versioning (v1, v2, v3) for Docker images to illustrate the deployment process steps.
+Going forward, our project has adopted a more comprehensive versioning approach:
+
+1. **Previous approach** (as shown in this document):
+   - Used sequential version numbers (v1, v2, v3)
+   - Provided simple iteration tracking
+   - Limited traceability between code and container versions
+
+2. **Current approach**:
+   - Uses semantic versioning (SemVer) from application code (e.g., v0.9.0)
+   - Docker image tags match application version: clarusmenscr.azurecr.io/clarus-mens:v0.9.0
+   - Version information stored in Docker image labels
+   - Automated by scripts/Build-DockerImage.ps1
+
+For future deployments, replace commands like:
+
+```powershell
+docker build -t clarusmenscr.azurecr.io/clarus-mens:v3 .
+```
+
+With:
+
+```powershell
+.\scripts\Build-DockerImage.ps1 -PushToRegistry
+```
+
+This script reads the version from Directory.Build.props and handles all versioning consistently. For complete versioning
+details, see [Version Management](../development/versioning.md).
 
 ## Overview
 

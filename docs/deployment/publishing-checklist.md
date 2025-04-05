@@ -1,7 +1,15 @@
 # Publishing Checklist (Training Project)
 
-> **Focus**: Simple steps to publish the training/template API project using Docker and Azure App Service.
-> This checklist covers the actual implementation process used in our deployment.
+**Focus**: Simple steps to publish the training/template API project using Docker and Azure App Service.
+This checklist covers the actual implementation process used in our deployment.
+
+**Note**: For a more automated deployment process, see our new
+[Azure Deployment Workflow](azure-deployment-workflow.md) which uses the `Deploy-ToAzure.ps1` script to
+streamline the deployment process.
+
+For version updates and validation of Azure settings, refer to the
+[Version Update Checklist](version-update-checklist.md) which provides a comprehensive process for
+managing versions and validating deployments.
 
 ## Table of Contents
 
@@ -28,22 +36,26 @@ Before starting deployment:
 
 Verify everything works locally:
 
-- [ ] Build Docker image:
+- [x] Build Docker image:
 
-  ```bash
-  docker build -t clarusmens-api:v2 .
-  ```
+```bash
+docker build -t clarusmens-api:v2 .
+```
 
-- [ ] Run container:
+- [x] Run container:
 
-  ```bash
-  docker run -p 5000:80 clarusmens-api:v2
-  ```
+```bash
+docker run -p 5000:80 clarusmens-api:v2
+```
 
-- [ ] Test endpoints:
-  - [ ] <http://localhost:5000/health>
-  - [ ] <http://localhost:5000/swagger>
-  - [ ] <http://localhost:5000/api/diagnostics>
+- [ ] Test endpoints using the HTTP request file:
+  1. Open `ClarusMensAPI/api-manual-endpoint-requests.http`
+  2. Change the active environment to Docker: `@ClarusMensAPI_HostAddress = {{docker}}`
+  3. Send requests to test the following endpoints:
+     - [ ] Health check: `/health`
+     - [ ] Swagger: `/swagger`
+     - [ ] Diagnostics: `/api/diagnostics`
+     - [ ] Version: `/api/version`
 
 ## Azure Resource Setup
 
@@ -111,28 +123,43 @@ Make these code/configuration updates before deploying:
 
 Deploy the container image to Azure:
 
+**Note on Versioning**: We've transitioned from simple sequential versioning (v1, v2) to semantic versioning \
+that matches our application version. Use the Build-DockerImage.ps1 script for consistent versioning.
+
+**Process Automation**: For a more comprehensive version update process, refer to the \
+[Version Update Checklist](version-update-checklist.md) document.
+
 1. [x] Log in to ACR:
 
    ```bash
    az acr login --name clarusmenscr
    ```
 
-2. [x] Build updated Docker image:
+2. [x] Build Docker image with version from Directory.Build.props:
 
-   ```bash
-   docker build -t clarusmenscr.azurecr.io/clarus-mens:v2 .
+   ```powershell
+   # Recommended approach - handles versioning automatically
+   .\scripts\Build-DockerImage.ps1
+   
+   # Previous approach (for reference only)
+   # docker build -t clarusmenscr.azurecr.io/clarus-mens:v2 .
    ```
 
 3. [x] Push image to ACR:
 
-   ```bash
-   docker push clarusmenscr.azurecr.io/clarus-mens:v2
+   ```powershell
+   # Recommended approach - builds and pushes in one step
+   .\scripts\Build-DockerImage.ps1 -PushToRegistry
+   
+   # Previous approach (for reference only)
+   # docker push clarusmenscr.azurecr.io/clarus-mens:v2
    ```
 
-4. [x] Update Web App container image:
+4. [x] Update Web App container image (replace 0.9.0 with your current version):
 
-   ```bash
-   az webapp config container set --name clarus-mens-app --resource-group clarus-mens-rg --docker-custom-image-name clarusmenscr.azurecr.io/clarus-mens:v2
+   ```powershell
+   az webapp config container set --name clarus-mens-app --resource-group clarus-mens-rg \
+   --docker-custom-image-name clarusmenscr.azurecr.io/clarus-mens:v0.9.0
    ```
 
 5. [x] Restart the Web App:
@@ -145,11 +172,26 @@ Deploy the container image to Azure:
 
 After deployment, verify everything works:
 
+**Note on Validation**: For automated validation of Azure settings, use the new `-Validate` parameter
+with the Deploy-ToAzure.ps1 script:
+
+```powershell
+.\scripts\Deploy-ToAzure.ps1 -Validate
+```
+
 - [x] Check app availability at <https://clarus-mens-app.azurewebsites.net>
 - [ ] Verify these endpoints:
   - [ ] Health check: <https://clarus-mens-app.azurewebsites.net/health>
   - [ ] Swagger: <https://clarus-mens-app.azurewebsites.net/swagger>
   - [ ] Diagnostics: <https://clarus-mens-app.azurewebsites.net/api/diagnostics>
+  - [ ] Version: <https://clarus-mens-app.azurewebsites.net/api/version>
+- [ ] Validate Azure configuration settings:
+
+  ```powershell
+  az webapp config appsettings list --name clarus-mens-app --resource-group clarus-mens-rg
+  az webapp config container show --name clarus-mens-app --resource-group clarus-mens-rg
+  ```
+
 - [ ] Check logs and diagnostics:
 
   ```bash
@@ -169,6 +211,7 @@ Common issues and solutions:
    - Use Azure Portal for configuration rather than CLI when dealing with complex values
    - Set one setting at a time if you encounter issues
    - Escape special characters properly in PowerShell
+   - Use the new validation feature to verify settings: `.\scripts\Deploy-ToAzure.ps1 -Validate`
 
 3. [x] **Authentication issues**:
    - Re-authenticate with `az login` if session expires

@@ -1,10 +1,15 @@
 # Pre-Publishing Checklist (Training Project)
 
-> **Focus**: This checklist covers essential steps for publishing a training/template .NET API project.
-> It focuses on demonstrating deployment practices while keeping things simple.
+> **Focus**: This checklist covers critical preparation steps to complete *before* publishing to Azure or \
+> any other hosting platform.
+>
+> **Note**: After completing this checklist, refer to our [Publishing Checklist](publishing-checklist.md) \
+> for manual deployment steps or [Azure Deployment Workflow](azure-deployment-workflow.md) for our \
+> automated deployment script.
 >
 > **Maintenance**: This document follows the checklist maintenance rules maintained by Cursor AI.
-> Updates follow the standard status indicators: ✅ (completed), - [ ] (todo), 🔄 (in-progress), ⚠️ (blocked).
+> Updates follow the standard status indicators: ✅ (completed), - [ ] (todo), 🔄 (in-progress), \
+> ⚠️ (blocked).
 >
 > **Guidelines for maintaining this document:**
 >
@@ -76,6 +81,7 @@ Essential documentation updates:
 ✅ Document environment-specific configuration approaches
 ✅ Create Azure deployment walkthrough and planning guides
 ✅ Document lessons learned from deployment process
+✅ Create comprehensive version update checklist with validation steps
 
 - [ ] Add deployment URLs once available
 - [ ] Add API versioning documentation
@@ -88,6 +94,7 @@ Verify everything works:
 ✅ Functional tests passing
 ✅ Test configuration properly separated
 ✅ Docker test stage available (`--target=test`)
+✅ Updated HTTP request file to support multiple environments (local, Docker, Azure)
 
 - [ ] Test Docker container locally:
 
@@ -96,10 +103,14 @@ docker build -t clarusmens-api .
 docker run -p 5000:80 clarusmens-api
 ```
 
-- [ ] Test endpoints in container:
-  - [ ] Health check endpoint
-  - [ ] Main API endpoint
-  - [ ] Diagnostics endpoint
+- [ ] Test endpoints using the HTTP request file:
+  1. Open `ClarusMensAPI/api-manual-endpoint-requests.http`
+  2. Change the active environment to Docker: `@ClarusMensAPI_HostAddress = {{docker}}`
+  3. Send requests to test the following endpoints:
+     - [ ] Health check
+     - [ ] Main API endpoint
+     - [ ] Diagnostics endpoint
+     - [ ] Version endpoint
 - [ ] Add load testing configuration
 
 ## Configuration Management
@@ -158,6 +169,13 @@ Version tracking:
 ✅ Version information properly tracked
 ✅ Add API versioning strategy (to be extended after first publish)
 ✅ Added version information to logs at startup
+✅ Create version update script (Update-Version.ps1)
+✅ Create detailed version update checklist document
+✅ Implement version endpoint to verify deployed version
+✅ Integration of version information into Docker image labels
+
+🔄 Implement validation feature for configuration settings
+🔄 Design version validation process for deployment
 
 - [ ] Add staging environment deployment step
 
@@ -166,6 +184,7 @@ Version tracking:
 Plan for the future:
 
 ✅ Environment-specific configuration handling implemented
+✅ Version update process documented for maintainability
 
 - [ ] Prepare database migration strategy
 - [ ] Add scalability considerations documentation

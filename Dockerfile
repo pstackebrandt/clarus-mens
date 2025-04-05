@@ -41,6 +41,14 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
+# Accept version parameter
+ARG VERSION=0.9.0
+
+# Add version information as Docker labels
+LABEL org.clarus-mens.version=${VERSION}
+LABEL org.clarus-mens.description="Clarus Mens API"
+LABEL org.clarus-mens.maintainer="Team Clarus Mens"
+
 # Set environment variables
 ENV ASPNETCORE_URLS=http://+:80
 ENV ASPNETCORE_ENVIRONMENT=Production

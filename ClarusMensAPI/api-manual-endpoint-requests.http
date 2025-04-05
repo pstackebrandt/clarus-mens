@@ -3,7 +3,21 @@
 
 // This file is used to test the API using the HTTP client.
 
-@ClarusMensAPI_HostAddress = http://localhost:5209
+// Environment URLs - uncomment one to select environment
+@local = http://localhost:5209
+@docker = http://localhost:5000
+@azure = https://clarus-mens-app.azurewebsites.net
+
+// ACTIVE ENVIRONMENT: Set this to the environment you want to test against
+//@ClarusMensAPI_HostAddress = {{local}}
+@ClarusMensAPI_HostAddress = {{docker}}
+//@ClarusMensAPI_HostAddress = {{azure}}
+
+// To test different environments:
+// 1. For local development: Use @ClarusMensAPI_HostAddress = {{local}}
+// 2. For Docker container: Use @ClarusMensAPI_HostAddress = {{docker}}
+//    Then run: docker run -p 5000:80 clarusmenscr.azurecr.io/clarus-mens:[version]
+// 3. For Azure deployment: Use @ClarusMensAPI_HostAddress = {{azure}}
 
 ### Root Endpoint
 # Access the API root endpoint which provides essential information
@@ -28,6 +42,11 @@ Accept: text/html
 ### Version information
 # Get the version information
 GET {{ClarusMensAPI_HostAddress}}/api/version
+Accept: application/json
+
+### Diagnostics
+# Get runtime diagnostic information
+GET {{ClarusMensAPI_HostAddress}}/api/diagnostics
 Accept: application/json
 
 ### Question

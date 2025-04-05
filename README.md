@@ -64,25 +64,25 @@ See [Using ClarusMens as a Template](docs/TEMPLATE_USAGE.md) for detailed instru
 
 1. Clone the repository
 
-   ``` powershell
+   ```powershell
    git clone https://github.com/pstackebrandt/clarus-mens.git
    ```
 
 2. Navigate to the project directory
 
-   ``` powershell
+   ```powershell
    cd clarus-mens
    ```
 
 3. Build the solution
 
-   ``` powershell
+   ```powershell
    dotnet build
    ```
 
 4. Run the API
 
-   ``` powershell
+   ```powershell
    cd ClarusMensAPI
    dotnet run
    ```
@@ -101,7 +101,7 @@ dotnet test -c Testing
 ```
 
 The `Testing` configuration is a specialized build configuration optimized for test execution,
- with separate output directories and test-specific settings.
+with separate output directories and test-specific settings.
 
 > **Note**: You may see a warning about no tests in the IntegrationTests project - this is expected and can be ignored.
 
@@ -123,9 +123,11 @@ docker run -it clarusmens-api-test
 
 For standard testing, use the non-containerized approach detailed above.
 
-For detailed Docker build and testing documentation, see [Docker Build Documentation](docs/deployment/docker-build-documentation.md).
+For detailed Docker build and testing documentation, see \
+[Docker Build Documentation](docs/deployment/docker-build-documentation.md).
 
-For more detailed testing options, CI/CD integration details, and environment variables, see the [tests README](./tests/README.md).
+For more detailed testing options, CI/CD integration details, and environment variables, see the \
+[tests README](./tests/README.md).
 
 ### Using REST Client
 
@@ -161,7 +163,7 @@ You can also test the API using your browser or tools like Postman:
 
 For faster development, use:
 
-``` powershell
+```powershell
 dotnet watch run
 ```
 
@@ -175,7 +177,8 @@ This enables hot reload so you can see changes without manually restarting the a
 
 ## Versioning
 
-This project uses Semantic Versioning. For version update instructions and processes, see [VERSIONING.md](./VERSIONING.md).
+This project uses Semantic Versioning. For version update instructions and processes, see \
+[versioning.md](docs/development/versioning.md).
 
 ## License
 

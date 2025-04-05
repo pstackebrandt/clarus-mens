@@ -2,6 +2,36 @@
 
 This document describes the version management approach used in the Clarus Mens project.
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Versioning System](#versioning-system)
+- [Current Setup](#current-setup)
+  - [Version Properties](#version-properties)
+  - [Key Files](#key-files)
+- [How to Update Versions](#how-to-update-versions)
+  - [Using the PowerShell Script](#using-the-powershell-script)
+  - [Using VS Code Tasks](#using-vs-code-tasks)
+- [When to Update Versions](#when-to-update-versions)
+- [Version Release Process](#version-release-process)
+- [Viewing Version Information](#viewing-version-information)
+- [Docker Image Versioning](#docker-image-versioning)
+  - [Docker Image Tags](#docker-image-tags)
+  - [Building Versioned Docker Images](#building-versioned-docker-images)
+- [Accessing Version Information in the Application](#accessing-version-information-in-the-application)
+  - [Version Information in API](#version-information-in-api)
+  - [Display Versions and Pre-release Identifiers](#display-versions-and-pre-release-identifiers)
+- [Adding Version Display to Your Application](#adding-version-display-to-your-application)
+- [Relationship Between Directory.Build.props and Runtime Version](#relationship-between-directorybuildprops-and-runtime-version)
+- [Fixing Versioning with SemVer in .NET](#fixing-versioning-with-semver-in-net)
+- [Current Issues](#current-issues)
+- [Recommendations for .NET SemVer Implementation](#recommendations-for-net-semver-implementation)
+  - [1. Consistent Version Properties](#1-consistent-version-properties)
+  - [2. Update the Versioning Script](#2-update-the-versioning-script)
+  - [3. Align API Response with SemVer](#3-align-api-response-with-semver)
+  - [4. Pre-release Version Handling](#4-pre-release-version-handling)
+- [Benefits of Consistent SemVer in .NET](#benefits-of-consistent-semver-in-net)
+
 ## Versioning System
 
 We follow [Semantic Versioning 2.0.0](https://semver.org/) (`MAJOR.MINOR.PATCH`):
@@ -101,6 +131,23 @@ For convenience, VS Code tasks have been configured to run the script:
    - Including version in tag and message ensures consistency
 5. Push the changes and tags: `git push && git push --tags`
 
+For a complete, detailed checklist covering the entire version update and deployment process, refer to the \
+[Version Update Checklist](../deployment/version-update-checklist.md) document. This checklist includes:
+
+- Pre-update planning steps
+- Docker image building and tagging
+- Azure deployment procedures
+- Azure configuration validation
+- Post-deployment verification steps
+
+The deployment process now includes an automated validation feature that can verify all Azure settings match \
+the expected configuration, ensuring consistent deployments. Use the `-Validate` parameter with the \
+`Deploy-ToAzure.ps1` script to perform this validation:
+
+```powershell
+.\scripts\Deploy-ToAzure.ps1 -Validate
+```
+
 ## Viewing Version Information
 
 The current version information can be found in:
@@ -110,6 +157,60 @@ The current version information can be found in:
 - API documentation via Swagger/OpenAPI
 - Application logs (configured at startup)
 - API endpoint at `/api/version`
+
+## Docker Image Versioning
+
+The application version is incorporated into our Docker images to maintain traceability between containers \
+and source code.
+
+Docker labels are used to add metadata to images, including version information. This makes it possible to \
+inspect an image to determine its version without running the container.
+
+Our Dockerfile includes:
+
+```dockerfile
+# Accept version parameter
+ARG VERSION=0.9.0
+
+# Add version information as Docker labels  
+LABEL org.clarus-mens.version=${VERSION}
+LABEL org.clarus-mens.description="Clarus Mens API"
+LABEL org.clarus-mens.maintainer="Team Clarus Mens"
+```
+
+### Docker Image Tags
+
+Docker image tags follow this convention:
+
+- **v{Major}.{Minor}.{Patch}** for release versions (e.g., v0.9.0)
+- **v{Major}.{Minor}.{Patch}-{PreRelease}** for pre-release versions (e.g., v0.9.0-beta)
+- **latest** tag is also applied to the most recent stable release
+
+### Building Versioned Docker Images
+
+The `scripts/Build-DockerImage.ps1` script automates the process of:
+
+1. Reading the version from Directory.Build.props
+2. Building a Docker image with that version in its labels
+3. Tagging the image according to our versioning convention
+4. Optionally pushing the image to our container registry
+
+Example usage:
+
+```powershell
+# Build locally with version info
+.\scripts\Build-DockerImage.ps1
+
+# Build and push to Azure Container Registry
+.\scripts\Build-DockerImage.ps1 -PushToRegistry
+```
+
+To verify the version in a Docker image:
+
+```powershell
+# Display version label
+docker inspect clarusmenscr.azurecr.io/clarus-mens:v0.9.0 --format '{{.Config.Labels}}'
+```
 
 ## Accessing Version Information in the Application
 

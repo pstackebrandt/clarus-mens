@@ -1,6 +1,7 @@
 # ASP.NET Core Hosting Options
 
-This document outlines various options for hosting ASP.NET Core applications, from cloud providers to self-hosting solutions.
+This document outlines various options for hosting ASP.NET Core applications, from cloud providers to \
+self-hosting solutions.
 
 ## Cloud Hosting Options
 

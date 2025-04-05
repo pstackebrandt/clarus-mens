@@ -17,7 +17,7 @@
 ### Essential Training (2-3 hours)
 
 **"Deploy and manage containers with Azure App Service"**  
-[https://learn.microsoft.com/en-us/training/paths/deploy-manage-containers-app-service/](https://learn.microsoft.com/en-us/training/paths/deploy-manage-containers-app-service/)
+[Deploy and manage containers][deploy-manage-containers]
 
 This learning path covers:
 
@@ -32,7 +32,7 @@ This learning path covers:
 If you need just the essentials to get started quickly:
 
 **"Deploy a container instance in Azure"**  
-[https://learn.microsoft.com/en-us/training/modules/deploy-run-container-app-service/](https://learn.microsoft.com/en-us/training/modules/deploy-run-container-app-service/)
+[Deploy container instance][deploy-container]
 
 This focused module covers:
 
@@ -59,13 +59,19 @@ ideal preparation before performing the actual deployment.
 For team members who want to deepen their Azure knowledge further:
 
 - **"Implement containerized solutions"** (6-8 hours)  
-  [https://learn.microsoft.com/en-us/training/paths/implement-containerized-solutions/](https://learn.microsoft.com/en-us/training/paths/implement-containerized-solutions/)
-  
+  [Implement containerized solutions][containerized-solutions]
+
 - **"Implement continuous integration and continuous delivery"** (4-5 hours)  
-  [https://learn.microsoft.com/en-us/training/paths/implement-ci-cd-azure-devops/](https://learn.microsoft.com/en-us/training/paths/implement-ci-cd-azure-devops/)
-  
+  [Implement CI/CD][implement-ci-cd]
+
 - **"AZ-204: Developing Solutions for Microsoft Azure"** (Certification preparation)  
-  [https://learn.microsoft.com/en-us/training/paths/create-azure-app-service-web-apps/](https://learn.microsoft.com/en-us/training/paths/create-azure-app-service-web-apps/)
+  [Create Azure App Service web apps][create-web-apps]
 
 These additional resources go beyond the immediate needs of our project but provide valuable
 knowledge for future Azure-based development.
+
+[deploy-manage-containers]: https://learn.microsoft.com/en-us/training/paths/deploy-manage-containers-app-service/
+[deploy-container]: https://learn.microsoft.com/en-us/training/modules/deploy-run-container-app-service/
+[containerized-solutions]: https://learn.microsoft.com/en-us/training/paths/implement-containerized-solutions/
+[implement-ci-cd]: https://learn.microsoft.com/en-us/training/paths/implement-ci-cd-azure-devops/
+[create-web-apps]: https://learn.microsoft.com/en-us/training/paths/create-azure-app-service-web-apps/

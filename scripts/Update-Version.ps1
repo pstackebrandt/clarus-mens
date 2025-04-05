@@ -3,6 +3,11 @@
 # Purpose: Updates version numbers in Directory.Build.props following 
 #          Semantic Versioning (SemVer).
 #
+# Documentation:
+#   For complete versioning documentation, refer to docs/development/versioning.md
+#   This includes Docker image versioning and how version information is represented
+#   throughout the system.
+#
 # Usage:
 #   .\Update-Version.ps1 -VersionType major|minor|patch|release [-PreRelease <suffix>]
 #
@@ -13,11 +18,11 @@
 #   .\Update-Version.ps1 -VersionType release        # 1.2.3-beta → 1.2.3
 
 param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [ValidateSet("major", "minor", "patch", "release")]
     [string]$VersionType,
     
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [string]$PreRelease = ""
 )
 

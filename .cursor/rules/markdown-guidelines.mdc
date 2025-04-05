@@ -16,7 +16,7 @@ alwaysApply: false
 - Keep lines under 120 characters for readability
 - Break long lines at natural points (after periods, commas, or logical breaks)
 - Use **bold** for emphasis, *italics* for terminology
-- Code blocks: Triple backticks with language identifier
+- Code blocks: Triple backticks with language identifier (REQUIRED - prevents MD040)
 - Inline code: Single backticks for commands, variables
 - Horizontal rules (`---`) only to separate major sections
 
@@ -26,12 +26,12 @@ alwaysApply: false
 - Maintain consistent indentation for nested lists
 
 ## Links and References
-- Use descriptive link text: `[descriptive text](mdc:URL)`
+- Use descriptive link text: `[descriptive text](URL)`
 - Prefer relative links for project files
 - Group related references at document bottom
 
 ## Images
-- Include alt text: `![alt text](mdc:image-path)`
+- Include alt text: `![alt text](image-path)`
 - Keep width under 900px for readability
 - Store images in dedicated `/assets` or `/images` folder
 
@@ -39,3 +39,11 @@ alwaysApply: false
 - Use tables for structured data comparisons
 - Include header row and alignment indicators
 - Keep tables simple; avoid nested tables
+
+## Common Lint Errors to Avoid
+- MD040: Always specify a language for fenced code blocks
+- MD013: Keep line length under 120 characters
+- MD022: Headers must be surrounded by blank lines
+- MD023: Headers must start at beginning of line
+- MD032: Lists should be surrounded by blank lines
+- MD041: First line should be a top-level header

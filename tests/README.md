@@ -1,5 +1,26 @@
 # Clarus Mens Tests
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Test Structure](#test-structure)
+- [Build Configurations](#build-configurations)
+- [Running Tests](#running-tests)
+  - [.NET Tests](#net-tests)
+  - [Known Warnings](#known-warnings)
+  - [Environment Variables for Testing](#environment-variables-for-testing)
+  - [PowerShell Tests](#powershell-tests)
+- [Test Categories](#test-categories)
+- [Creating New Tests](#creating-new-tests)
+- [Code Coverage](#code-coverage)
+- [Test Data](#test-data)
+- [Continuous Integration](#continuous-integration)
+  - [CI/CD Pipeline Integration](#cicd-pipeline-integration)
+- [Docker-Based Testing](#docker-based-testing)
+  - [Including Tests in Docker Image](#including-tests-in-docker-image)
+  - [When to Use Docker for Testing](#when-to-use-docker-for-testing)
+  - [When to Use Direct Testing (Non-Docker)](#when-to-use-direct-testing-non-docker)
+
 ## Test Structure
 
 This project uses a multi-layered testing approach:
@@ -38,31 +59,25 @@ Always use the `Testing` configuration when running tests to ensure consistent a
 
 ### .NET Tests
 
-Run all tests with default configuration:
-
-```powershell
-dotnet test clarus-mens.sln
-```
-
-Run tests with the Testing configuration (recommended):
+Run tests with the recommended Testing configuration (from solution root):
 
 ```powershell
 dotnet test -c Testing
 ```
 
-Run a specific test project:
+Run a specific test project (from solution root):
 
 ```powershell
 dotnet test ./tests/ClarusMensAPI.UnitTests -c Testing
 ```
 
-Run tests with a specific category:
+Run tests with a specific category (from solution root):
 
 ```powershell
 dotnet test --filter "Category=Versioning" -c Testing
 ```
 
-Run tests with verbose output to see detailed results:
+Run tests with verbose output to see detailed results (from solution root):
 
 ```powershell
 dotnet test -c Testing -v detailed

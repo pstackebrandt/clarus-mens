@@ -1,0 +1,36 @@
+# Dockerfile.tests - Testing environment for Clarus Mens
+#
+# This Dockerfile creates a consistent environment for running tests across
+# all development machines and CI/CD pipelines.
+#
+# Benefits:
+# - Consistent test environment regardless of local setup
+# - Isolation from local system dependencies
+# - No need to install .NET SDK locally
+# - Environment similar to CI/CD pipeline
+#
+# For complete documentation on Docker-based testing, see:
+# - "Docker-Based Testing" section in tests/README.md
+#
+# Usage examples:
+# - Build:  docker build -t clarusmens-tests -f Dockerfile.tests .
+# - Run all tests:  docker run --rm clarusmens-tests
+# - Run specific project:  docker run --rm clarusmens-tests test ./tests/ClarusMensAPI.UnitTests -c Testing
+# - Run with category filter:  docker run --rm clarusmens-tests test -c Testing --filter "Category=Versioning"
+# - Run with detailed output:  docker run --rm clarusmens-tests test -c Testing -v detailed
+#
+# Note: When providing custom arguments, you must explicitly include "-c Testing"
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0
+
+WORKDIR /src
+COPY . .
+
+# Set the working directory to the solution root
+WORKDIR /src
+
+# Make the entrypoint flexible to support various test commands
+ENTRYPOINT ["dotnet"]
+
+# Default command runs all tests with Testing configuration
+CMD ["test", "-c", "Testing"] 

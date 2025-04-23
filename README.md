@@ -156,6 +156,9 @@ You can also test the API using your browser or tools like Postman:
   - Controllers for API endpoints
   - Service implementations
   - Data models
+- **Tasks/** - Current work items and ongoing tasks
+  - Troubleshooting guides
+  - Implementation checklists
 
 ## Development
 
